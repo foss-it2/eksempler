@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# Large files like wav
+*.wav
+
 # Distribution / packaging
 .Python
 build/
