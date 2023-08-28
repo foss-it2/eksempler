@@ -1,6 +1,14 @@
+"""
+Space invaders inspirert av Viggo Venn's opptreden på Brittain's Got Talent.
+https://www.youtube.com/watch?v=eG7KapXubxU
+"""
+
 import os
 import time
 import tkinter as tk
+import threading
+from pydub import AudioSegment
+from pydub.playback import play
 
 
 # Import av egne biblioteker
@@ -19,7 +27,7 @@ canvas_frame = tk.Frame(window)
 canvas_frame.pack()
 
 # 2) Lager en header med bildet alien
-header = tk.Canvas(canvas_frame,width = windowWidth, height = 100)
+header = tk.Canvas(canvas_frame,width = windowWidth, height = 10)
 header.pack()
 
 # Lager en NY ramme som selve spill-canvas kan ligge inni.
@@ -28,8 +36,10 @@ frame2.pack()
 canvas = tk.Canvas(frame2,width=windowWidth,height=windowHeight,background="black")
 canvas.pack()
 
-
-        
+# Funksjonen som spiller av lyd n antall ganger.
+def thread_function(n):
+    song = AudioSegment.from_wav("oneMoreTime_long.wav")
+    play(song * n)
 
 # Setter opp piltaster
 def processKeypress(evt):
@@ -52,7 +62,9 @@ for i in range(1,8):
     spill.newAlien(i*(50+10))
 
 
-isRunning = True
+# Starter sang med threading
+x = threading.Thread(target=thread_function, args=(10,))
+#x.start()
 
 teller = 0
 isRunning = True
@@ -104,7 +116,8 @@ while isRunning:
                 kulerSomSkalSlettes.append(kule.tag)   # Markerer kule for sletting og går videre til neste kule med "continue"
                 print(f"slettet kule {kule.tag}")
                 continue
-            spill.tegnKule(kule,canvas)
+            spill.tegnHjerte(kule,canvas)
+            #spill.tegnKule(kule,canvas)
             # Flytt kula
             kule.ypos -= kule.fart
             # Kollisjonstesting mot alle aliens, én etter én.
@@ -130,7 +143,8 @@ while isRunning:
         if len(kulerSomSkalSlettes) != 0:
             for kuleTag in kulerSomSkalSlettes:
                 spill.slettKule(kuleTag,canvas)
-        spill.tegnTank(canvas)
+        spill.tegnSimon(canvas)
+        #spill.tegnTank(canvas)
         spill.tank.flytt()
         
         

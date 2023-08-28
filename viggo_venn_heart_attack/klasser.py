@@ -3,7 +3,8 @@ Klasser for spillet space invaders
 """
 
 from random import randint
-from tkinter import PhotoImage
+#from tkinter import PhotoImage # macOS
+from PIL import Image, ImageTk
 
 class Spill:
     def __init__(self,hoyde, bredde) -> None:
@@ -119,7 +120,7 @@ class Alien:
         self.yfart = 0
         self.steg = 50
         self.tag = f"alien{Alien.teller}"
-        self.img = PhotoImage(file="viggo_venn_small.png")
+        self.img = ImageTk.PhotoImage(file="viggo_venn_small.png")
         print(f"lagde alien med tag {self.tag}")
 
 
@@ -136,7 +137,7 @@ class Tank:
         self.kuler = {}
         self.xfart = 3
         self.xmax = vindusBredde
-        self.img = PhotoImage(file="simon_cowell_small.png")
+        self.img = ImageTk.PhotoImage(file="simon_cowell_small.png")
 
     
     def skyt(self):
@@ -163,4 +164,4 @@ class Kule:
         self.hoyde = 30
         self.tag = f"kule{Kule.teller}"
         Kule.teller += 1
-        self.img = PhotoImage(file="heart_30x30.png")
+        self.img = ImageTk.PhotoImage(file="heart_30x30.png")
