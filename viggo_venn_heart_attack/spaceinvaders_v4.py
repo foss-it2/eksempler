@@ -1,6 +1,6 @@
 """
 Space invaders inspirert av Viggo Venn's opptreden på Brittain's Got Talent.
-https://www.youtube.com/watch?v=eG7KapXubxU
+https://www.youtube.com/watch?v=Gd53BJGox5s
 """
 
 import os
@@ -64,7 +64,7 @@ for i in range(1,8):
 
 # Starter sang med threading
 x = threading.Thread(target=thread_function, args=(10,))
-#x.start()
+x.start()
 
 teller = 0
 isRunning = True
