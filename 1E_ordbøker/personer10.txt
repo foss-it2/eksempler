@@ -1,0 +1,228 @@
+[
+    {
+        "navn": "Mina Lund",
+        "alder": 53,
+        "adresse": {
+            "gateadresse": "Storgata 15",
+            "postnummer": "7499",
+            "by": "Kongsberg",
+            "land": "Norge"
+        },
+        "interesser": [
+            "Maling",
+            "Sv\u00f8mming"
+        ],
+        "gift": false
+    },
+    {
+        "navn": "Ludvig Lystad",
+        "alder": 5,
+        "adresse": {
+            "gateadresse": "Bakkegata 7",
+            "postnummer": "2882",
+            "by": "Sarpsborg",
+            "land": "Norge"
+        },
+        "interesser": [
+            "Strikking",
+            "Hagearbeid",
+            "Sying",
+            "Fotografering",
+            "Sv\u00f8mming"
+        ],
+        "gift": false
+    },
+    {
+        "navn": "Petter Hovland",
+        "alder": 26,
+        "adresse": {
+            "gateadresse": "Baneveien 12",
+            "postnummer": "3458",
+            "by": "Narvik",
+            "land": "Norge"
+        },
+        "interesser": [
+            "Sying",
+            "Maling",
+            "Sykling",
+            "Strikking",
+            "Fotografering",
+            "Fotturer",
+            "Yoga",
+            "Hagearbeid",
+            "Musikk",
+            "Tegning",
+            "Camping",
+            "Lesing",
+            "Baking",
+            "Skitur",
+            "Fiske",
+            "Klatring",
+            "Sv\u00f8mming",
+            "Trening"
+        ],
+        "gift": false
+    },
+    {
+        "navn": "Magnus Gran",
+        "alder": 92,
+        "adresse": {
+            "gateadresse": "Nygata 6",
+            "postnummer": "5643",
+            "by": "Bergen",
+            "land": "Norge"
+        },
+        "interesser": [
+            "Trening",
+            "Maling",
+            "Fotturer",
+            "Tegning",
+            "Reiser",
+            "Sying",
+            "Sv\u00f8mming",
+            "Koke",
+            "Sykling",
+            "Strikking",
+            "Klatring",
+            "Musikk",
+            "Baking",
+            "Lesing",
+            "Camping",
+            "Hagearbeid"
+        ],
+        "gift": true
+    },
+    {
+        "navn": "Emil Skogstad",
+        "alder": 70,
+        "adresse": {
+            "gateadresse": "M\u00f8llegata 9",
+            "postnummer": "9892",
+            "by": "Sandefjord",
+            "land": "Norge"
+        },
+        "interesser": [
+            "Skitur",
+            "Camping",
+            "Lesing",
+            "Baking",
+            "Musikk",
+            "Koke",
+            "Sying",
+            "Maling",
+            "Fiske",
+            "Tegning",
+            "Reiser",
+            "Strikking",
+            "Fotturer",
+            "Hagearbeid",
+            "Klatring",
+            "Yoga",
+            "Trening",
+            "Fotografering",
+            "Sykling"
+        ],
+        "gift": false
+    },
+    {
+        "navn": "Theodor Hovde",
+        "alder": 63,
+        "adresse": {
+            "gateadresse": "Skippergata 15",
+            "postnummer": "5728",
+            "by": "Drammen",
+            "land": "Norge"
+        },
+        "interesser": [
+            "Musikk",
+            "Maling"
+        ],
+        "gift": false
+    },
+    {
+        "navn": "Isabella Skoglund",
+        "alder": 92,
+        "adresse": {
+            "gateadresse": "Kongens gate 8",
+            "postnummer": "6811",
+            "by": "Kristiansand",
+            "land": "Norge"
+        },
+        "interesser": [
+            "Klatring",
+            "Koke",
+            "Maling",
+            "Fotografering",
+            "Musikk",
+            "Reiser",
+            "Fiske",
+            "Trening",
+            "Camping",
+            "Sv\u00f8mming",
+            "Sykling",
+            "Yoga",
+            "Sying",
+            "Fotturer"
+        ],
+        "gift": false
+    },
+    {
+        "navn": "Amalie Nordli",
+        "alder": 81,
+        "adresse": {
+            "gateadresse": "L\u00f8kkegata 11",
+            "postnummer": "6610",
+            "by": "Haugesund",
+            "land": "Norge"
+        },
+        "interesser": [
+            "Sv\u00f8mming",
+            "Fotografering",
+            "Reiser",
+            "Fotturer"
+        ],
+        "gift": true
+    },
+    {
+        "navn": "Herman Jacobsen",
+        "alder": 37,
+        "adresse": {
+            "gateadresse": "Kongens gate 5",
+            "postnummer": "7836",
+            "by": "Bergen",
+            "land": "Norge"
+        },
+        "interesser": [
+            "Sv\u00f8mming",
+            "Strikking",
+            "Trening",
+            "Fiske",
+            "Fotturer",
+            "Baking",
+            "Koke"
+        ],
+        "gift": false
+    },
+    {
+        "navn": "Filip Solberg",
+        "alder": 92,
+        "adresse": {
+            "gateadresse": "Baneveien 16",
+            "postnummer": "7008",
+            "by": "Arendal",
+            "land": "Norge"
+        },
+        "interesser": [
+            "Camping",
+            "Koke",
+            "Strikking",
+            "Hagearbeid",
+            "Maling",
+            "Baking",
+            "Yoga",
+            "Klatring",
+            "Fiske"
+        ],
+        "gift": true
+    }
+]
