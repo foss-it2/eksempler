@@ -2,6 +2,15 @@
 Ordbok
 nøkkel: verdi
 """
+# Struktur til ordbok, ulike nøkler
+ordbok ={
+    "nøkkel1": "verdi",
+    "nøkkel2": "verdi",
+    "nøkkel3": "verdi",
+    "nøkkel4": "verdi",
+    "nøkkel5": "osv",
+}
+
 bok = {}
 bok["fornavn"] = "Henrik"
 bok["fornavn"] = "AAA"
@@ -13,6 +22,7 @@ if "postnr" in bok:
 print(bok)
 bok["testverdi"] = 1450
 
+# Slette alle forekomster av en spesiell verdi
 til_sletting = []
 for x in bok:
     print(x, bok[x])
@@ -23,14 +33,5 @@ for key in til_sletting:
     bok.pop(key)
 
 print(bok)
-    
-# Gå gjennom ordbok med løkke, 
-# slett nøkkel/verdi hvis verdi er tallet 1450.
 
-ordbok ={
-    "nøkkel1": "verdi",
-    "nøkkel2": "verdi",
-    "nøkkel3": "verdi",
-    "nøkkel4": "verdi",
-    "nøkkel5": "osv",
-}
+
