@@ -9,6 +9,17 @@ __pycache__/
 # Large files like wav
 *.wav
 
+# Synology Drive
+.DS_Store
+
+# Webstorm
+.idea
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
 # Distribution / packaging
 .Python
 build/
