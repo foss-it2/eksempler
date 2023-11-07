@@ -11,7 +11,8 @@ Bootstrap(app)  # Benytter Bootstrap-bibliotek for å benytte Bootstrap funksjon
 
 @app.route("/")
 def home():
-    return render_template('index.html')
+    mine_bilder = ["/static/duck.jpg","/static/bilde2.png"]
+    return render_template('index.html',bilder=mine_bilder) # Sender med parameter bilder
 
 @app.route("/about")
 def about():
