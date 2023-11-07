@@ -12,5 +12,14 @@
   <div>
     <h1>Velkommen IT2!</h1> 
     <a href="/about">Om oss</a>
+
+    <h2>Bilde av en and</h2>
+    <img src="{{ bilder[0] }}" alt="Bilde av en and">
+
+    <h2>For løkke legger ut bilder</h2>
+    {% for bilde in bilder %}
+      <img src="{{ bilde }}" alt="{{ bilde }}">
+      <br>
+    {% endfor %}
   </div>
 {% endblock %}
