@@ -2,3 +2,26 @@ h1 {
     font-size: 350%;
     color: white;
 }
+body {
+    color: white;
+}
+.navigasjon {
+    display: flex;
+    justify-content: flex-start;
+}
+.navigasjons-knapp {
+    display: flex;
+    width: 10vw;
+    height: 5vh;
+    border: solid white 1px;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    font-size: 110%;
+}
+a {
+    text-decoration: none;
+}
+a:hover {
+    background-color: aquamarine;
+}
