@@ -6,9 +6,13 @@ body {
     color: white;
 }
 .navigasjon {
+    padding: 0;
+    padding-top: 0.5vw;
+    list-style-type: none; /* fjerner kulepunkter */
     display: flex;
     justify-content: flex-start;
 }
+
 .navigasjons-knapp {
     display: flex;
     width: 10vw;
@@ -18,10 +22,12 @@ body {
     justify-content: center;
     align-items: center;
     font-size: 110%;
+    margin-right: 1vw;
 }
-a {
+
+ul a {
     text-decoration: none;
 }
-a:hover {
+a:hover .navigasjons-knapp {
     background-color: aquamarine;
 }
