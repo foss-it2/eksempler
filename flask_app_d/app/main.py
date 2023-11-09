@@ -16,7 +16,7 @@ def home():
 
 @app.route("/about")
 def about():
-    return "Returnerer en tekst om oss :)"
+    return render_template('about.html')
 
 @app.route("/<name>")   # Hvis du skriver inn webadressen etterfulgt av forwardslash og tekst vil teksten returneres.
 def show_project(name):

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        MauroyLab
+
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="shortcut icon" href="https://hmauroy.github.io/8bitHenrik.png">
+    <link rel="stylesheet" href="/static/mauroy.css">
+    <link rel="stylesheet" media="all and (min-width: 768px)" href="/static/mauroy_desktop.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+
+    </style>
+</head>
+
+<body class="bg-dark">
+
+
+
+    <nav class="navbar navbar-expand-md navbar-dark mauroy-dark" aria-label="primary menu">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">mauroyLab</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/projects">projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">about</a>
+                    </li>
+
+                </ul>
+
+
+            </div>
+        </div>
+    </nav>
+
+
+
+
+
+
+    <div>
+        <div class="hero-background">
+            <div class="mauroy-flex hero" id="hero">
+                <div class="hero-text">
+                    <div class="spacer"></div>
+                    <p class="hero-heading">Hi, I'm <br /> <span class="hero-heading-larger">Henrik</span>.</p>
+                    <p class="hero-subheading">I explore science, computers, electronics and ponder over the mysteries
+                        of the universe.</p>
+                    <div class="mauroy-btn-container">
+                        <a class="btn hero-btn mauroy-btn-pink" href="/projects">To the projects!</a>
+                        <a class="btn hero-btn mauroy-btn-blue" href="/about">About</a>
+                    </div>
+                </div>
+                <div class="mauroy-flex hero-container">
+                    <img class="hero-image" src="/static/santa.png" alt="Responsive hero image">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row spacer mauroy-dark"></div>
+
+
+        <div class="three-feature mauroy-flex">
+            <!--Her skal det være Jinja2 IF-tester for å sjekke om databasen har hostet frem de siste tre prosjektene, ellers vises 3 manuelt innskrevne prosjekt-->
+
+
+            <div class="mauroy-square-container mauroy-flex-start">
+                <img src="/static/uploads/pinnebr%C3%B8d.png" alt=Worlds greatest stick bread
+                    class="feature-background-image">
+                <div class="mauroy-square-mini-container mauroy-flex-column">
+                    <div class="top-divider">
+                        <p class="feature-heading">Worlds greatest stick bread</p>
+                    </div>
+                    <div class="middle-divider">
+                        <p class="feature-ingress">A simple stick bread with sugar and chocolate chips</p>
+                        <p class="feature-date">Written <span class="flask-moment" data-timestamp="2023-10-20T09:07:23Z"
+                                data-function="fromNow" data-refresh="0"
+                                style="display: none">2023-10-20T09:07:23Z</span>.</p>
+                    </div>
+                    <div class="bottom-divider">
+                        <p>
+                            <a class="btn mauroy-btn feature-btn mauroy-btn-blue"
+                                href="/projects/Worlds%20greatest%20stick%20bread">Read more...</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="mauroy-square-container mauroy-flex-start">
+                <img src="/static/uploads/test.png" alt=enda en tittel class="feature-background-image">
+                <div class="mauroy-square-mini-container mauroy-flex-column">
+                    <div class="top-divider">
+                        <p class="feature-heading">enda en tittel</p>
+                    </div>
+                    <div class="middle-divider">
+                        <p class="feature-ingress">Forsøker å få på plass unik thumbnail for hver post.</p>
+                        <p class="feature-date">Written <span class="flask-moment" data-timestamp="2023-08-25T10:27:15Z"
+                                data-function="fromNow" data-refresh="0"
+                                style="display: none">2023-08-25T10:27:15Z</span>.</p>
+                    </div>
+                    <div class="bottom-divider">
+                        <p>
+                            <a class="btn mauroy-btn feature-btn mauroy-btn-blue"
+                                href="/projects/enda%20en%20tittel">Read more...</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="mauroy-square-container mauroy-flex-start">
+                <img src="/static/uploads/nexa_protocol.png" alt=Nexa protocol class="feature-background-image">
+                <div class="mauroy-square-mini-container mauroy-flex-column">
+                    <div class="top-divider">
+                        <p class="feature-heading">Nexa protocol</p>
+                    </div>
+                    <div class="middle-divider">
+                        <p class="feature-ingress">In this project I&#39;m investigating Nexa RF-transmitters to control
+                            my house lighting indoors and outdoors.</p>
+                        <p class="feature-date">Written <span class="flask-moment" data-timestamp="2023-01-27T20:14:41Z"
+                                data-function="fromNow" data-refresh="0"
+                                style="display: none">2023-01-27T20:14:41Z</span>.</p>
+                    </div>
+                    <div class="bottom-divider">
+                        <p>
+                            <a class="btn mauroy-btn feature-btn mauroy-btn-blue" href="/projects/Nexa%20protocol">Read
+                                more...</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+    </div> <!--END container-fluid-->
+
+
+
+    <div class="row spacer-large mauroy-dark"></div>
+    <div class="mauroy-flex mauroy-footer mauroy-dark">
+        <div class=" mauroy-flex mauroy-main-footer">
+            <a href="mailto:henrik@mauroy.no">Contact me</a>
+            <div class="social-icons">
+                <a class="social-icon fab fa-youtube fa-3x" href="https://www.youtube.com/@henrikmauroy5221"></a>
+                <a class="social-icon fab fa-github fa-3x" href="https://github.com/hmauroy"></a>
+                <a class="social-icon fab fa-linkedin fa-3x"
+                    href="https://www.linkedin.com/in/henrik-mauroy-bba24b62"></a>
+            </div>
+        </div>
+        <div class=" mauroy-flex mauroy-sub-footer">
+            <p class="copyright">Handcrafted by <a class="link-no-decoration link-hover-dark" href="/about">me</a>
+                &copy; 2023 Henrik Charlsen Mauroy</p>
+        </div>
+    </div>
+
+
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+        // Bootstrap js is not showing hamburger menu. Need to close flash-alert manually.
+        document.addEventListener("DOMContentLoaded", function () {
+            let closeButton = document.querySelector(".close");
+            if (closeButton) {  // Need to prevent error message in the console.
+                console.log("Alert box is present!");
+                closeButton.addEventListener("click", function () {
+                    document.querySelector(".alert").style.display = "none";
+                });
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+        </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"
+        integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg=="
+        crossorigin="anonymous"></script>
+
+    <script>
+        moment.locale("en");
+        function flask_moment_render(elem) {
+            {
+                const timestamp = moment(elem.dataset.timestamp);
+                const func = elem.dataset.function;
+                const format = elem.dataset.format;
+                const timestamp2 = elem.dataset.timestamp2;
+                const no_suffix = elem.dataset.nosuffix;
+                const units = elem.dataset.units;
+                let args = [];
+                if (format)
+                    args.push(format);
+                if (timestamp2)
+                    args.push(moment(timestamp2));
+                if (no_suffix)
+                    args.push(no_suffix);
+                if (units)
+                    args.push(units);
+                elem.textContent = timestamp[func].apply(timestamp, args);
+                elem.classList.remove('flask-moment');
+                elem.style.display = "";
+            }
+        }
+        function flask_moment_render_all() {
+            {
+                const moments = document.querySelectorAll('.flask-moment');
+                moments.forEach(function (moment) {
+                    {
+                        flask_moment_render(moment);
+                        const refresh = moment.dataset.refresh;
+                        if (refresh && refresh > 0) {
+                            {
+                                (function (elem, interval) {
+                                    {
+                                        setInterval(function () {
+                                            {
+                                                flask_moment_render(elem);
+                                            }
+                                        }, interval);
+                                    }
+                                })(moment, refresh);
+                            }
+                        }
+                    }
+                })
+            }
+        }
+        document.addEventListener("DOMContentLoaded", flask_moment_render_all);
+    </script>
+
+
+
+
+</body>
+
+</html>

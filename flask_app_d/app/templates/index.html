@@ -14,6 +14,8 @@
     <img src="/static/duck.jpg" alt="Bilde av en and.">
     <br>
     <a href="/about">Om oss</a>
+    <br>
+    <a href="{{ url_for('home') }}">Hjem</a>
     <h2>Bilde av and 2</h2>
     <p>Parameter "bilder" er nå en variabel vi kan jobbe med.</p>
     <img src="{{ bilder[0] }}" alt="bilde av and">
