@@ -20,7 +20,7 @@ def about():
 
 @app.route("/<name>")   # Hvis du skriver inn webadressen etterfulgt av forwardslash og tekst vil teksten returneres.
 def show_project(name):
-    return f"Velkommen {name}"
+    return f"Velkommen kjære {name}"
 
 
 if __name__ == "__main__":
