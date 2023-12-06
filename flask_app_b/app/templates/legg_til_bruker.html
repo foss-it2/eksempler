@@ -1,0 +1,23 @@
+
+{% extends "base.html" %}
+
+
+{# Custom CSS for this very page is inserted here, Uncomment block to activate.}
+{% block styles %}
+{{super()}}
+{% endblock %#}
+
+{% block content %}
+
+  <div>
+    <h1>Opprett bruker</h1>
+    <form action="{{url_for('add_user')}}" method="post">
+        <input type="text" name="epost" placeholder="epost"> <br>
+        <input type="text" name="fornavn" placeholder="Fornavn"> <br>
+        <input type="password" name="passord" placeholder="Passord"> <br>
+        <button type="submit" id="submit-button">Registrer</button>
+    </form>
+    
+    
+  </div>
+{% endblock %}
