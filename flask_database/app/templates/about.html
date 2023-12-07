@@ -1,0 +1,16 @@
+
+{% extends "base.html" %}
+
+
+{# Custom CSS for this very page is inserted here, Uncomment block to activate.}
+{% block styles %}
+{{super()}}
+{% endblock %#}
+
+{% block content %}
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Qm13uiZ0KWc?si=2YfeICpmZACRkbZ0"
+    title="YouTube video player" frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen></iframe>
+  
+{% endblock %}

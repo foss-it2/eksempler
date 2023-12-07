@@ -1,0 +1,22 @@
+
+{% extends "base.html" %}
+
+
+{# Custom CSS for this very page is inserted here, Uncomment block to activate.}
+{% block styles %}
+{{super()}}
+{% endblock %#}
+
+{% block content %}
+
+  <div>
+    <h1>Innlogging</h1>
+    <form id="watershed_form" action="{{url_for('login')}}" method="post">
+        <input type="text" name="epost" placeholder="epost"> <br>
+        <input type="password" name="passord" placeholder="passord"> <br>
+        <button type="submit" id="submit-button">Log in</button>
+    </form>
+    
+    
+  </div>
+{% endblock %}
