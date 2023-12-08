@@ -26,7 +26,7 @@ print(app.config['SQLALCHEMY_DATABASE_URI'])
 # Initialize the db object
 db.init_app(app)
 
-# Oppretter databasetabellene (Kommenter ut/slett denne seksjonen når databasen skal fylles med data, ellers blir alt slettet hver gang appen kjøres.)
+# Oppretter databasetabellene (Overskriver ikke hvis databasefilen database.db allerede er opprettet.)
 with app.app_context():
     try:
         db.create_all()
@@ -35,6 +35,7 @@ with app.app_context():
     except Exception as e:
         print(f"Error creating tables: {e}")
 
+# Kode for å slette en rad i tabellen Posts (eller bytte it Posts med en annen tabell).
 # with app.app_context():
 #     row_to_delete = Posts.query.filter_by(id=2).first()
 
