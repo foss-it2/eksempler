@@ -14,7 +14,7 @@
     {% if brukere %}
     <ol>
         {% for bruker in brukere %}
-        <li>{{ bruker.fornavn }} {{ bruker.epost }} {{ bruker.date_added }}</li>
+        <li>ID: {{ bruker.id }}, Fornavn: {{ bruker.fornavn }}, epost: {{ bruker.epost }}, dato lagt til:{{ bruker.date_added }}</li>
         {% endfor %}
     </ol>
     {% endif %}

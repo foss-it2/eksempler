@@ -1,0 +1,31 @@
+
+{% extends "base.html" %}
+
+
+{# Custom CSS for this very page is inserted here, Uncomment block to activate.}
+{% block styles %}
+{{super()}}
+{% endblock %#}
+
+{% block content %}
+
+  <div>
+    <h1>Posts</h1>
+    {% if posts %}
+        {% for post in posts %}
+        <div class="post-container">
+            <h2>{{ post.tittel }}</h2>
+            <img class="post-img" src="{{ url_for('static', filename=post.bilde_url) }}">
+            <div class="post-tekst">
+                {{ post.tekst }}
+            </div>
+            <div class="hr-white"></div>
+            <div class="post-dato">
+                Skrevet av brukerID: {{ post.bruker_id }} -  {{ post.date_added.strftime('%-d. %b %Y %H:%M') }}
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+
+  </div>
+{% endblock %}

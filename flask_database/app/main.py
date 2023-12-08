@@ -5,9 +5,8 @@ from flask_bootstrap import Bootstrap
 from flask import request
 
 # Pakker som har med database å gjøre.
-from flask_sqlalchemy import SQLAlchemy
 import os
-from models import db, Users, Logg
+from models import db, Users, Logg, Posts
 from datetime import datetime
 
 
@@ -36,6 +35,14 @@ with app.app_context():
     except Exception as e:
         print(f"Error creating tables: {e}")
 
+# with app.app_context():
+#     row_to_delete = Posts.query.filter_by(id=2).first()
+
+# # Check if the row exists before attempting to delete
+# if row_to_delete:
+#     with app.app_context():
+#         db.session.delete(row_to_delete)
+#         db.session.commit()
 
 @app.route("/")
 def home():
@@ -104,6 +111,36 @@ def alle_innlogginger():
 def alle_brukere():
     brukere = Users.query.all()
     return render_template("brukere.html", brukere=brukere)
+
+
+@app.route("/posts", methods=['GET'])
+def alle_posts():
+    print("sjekker db")
+    posts = Posts.query.all()
+    print("Ferdgi sjekke db")
+    return render_template("posts.html", posts=posts)
+
+
+@app.route("/add_post", methods=['GET', 'POST'])
+def add_post():
+    if request.method == "POST":
+        data = request.form
+        tittel = data["tittel"]
+        tekst = data["tekst"]
+        bruker_id = data["bruker_id"]
+        bilde_url = data["bilde_url"]
+        print(bruker_id, tittel, tekst)
+        # Sjekker om bruker allerede finnes med den epostadressen:
+        with app.app_context():
+            # Legger inn posten i databasen
+            post = Posts(bruker_id=bruker_id, tittel=tittel, tekst=tekst, bilde_url=bilde_url)
+            db.session.add(post)    # Legger data inn i databasen.
+            db.session.commit()     # Bekrefter at databasen skal lagre.
+            # Henter alle posts som kan sendes tilbake til nettsiden:
+            alle_posts = Posts.query.all()
+            return render_template("posts.html", posts=alle_posts)
+    else:
+        return render_template("legg_til_post.html")
 
 
 if __name__ == "__main__":

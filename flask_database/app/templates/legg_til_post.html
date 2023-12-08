@@ -1,0 +1,24 @@
+
+{% extends "base.html" %}
+
+
+{# Custom CSS for this very page is inserted here, Uncomment block to activate.}
+{% block styles %}
+{{super()}}
+{% endblock %#}
+
+{% block content %}
+
+  <div>
+    <h1>Skriv en post</h1>
+    <form action="{{url_for('add_post')}}" method="post">
+        <input type="number" name="bruker_id" placeholder="brukerID som tall"> <br>
+        <input type="text" name="tittel" placeholder="Tittel"> <br>
+        <input type="text" name="bilde_url" placeholder="Bilde-URL"> <br>
+        <input type="text" name="tekst" placeholder="Tekst"> <br>
+        <button type="submit" id="submit-button">Legg til post</button>
+    </form>
+    
+    
+  </div>
+{% endblock %}

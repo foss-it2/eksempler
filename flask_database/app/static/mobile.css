@@ -13,7 +13,8 @@ ul.navigasjon {
 li.nav-knapp {
     display: flex;
     width: 10vw;
-    height: 5vw;
+    height: 7vw;
+    font-size: 2.2vw;
     border: solid white 1px;
     border-radius: 5px;
     margin-right: 1vw;
@@ -29,3 +30,45 @@ a:hover .nav-knapp {
 a:visited .nav-knapp {
     color: white;
 }
+
+/******* POSTS *********/
+.post-container {
+    display: flex;
+    width: 95vw;
+    border: solid white 1px;
+    border-radius: 10px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 2.5vw;
+    margin-right: 2.5vw;
+    margin-bottom: 5vw;
+}
+.hr-white {
+    width: 98%;
+    height: 0.1px;
+    border-top: solid 0.1px;
+    border-color: inherit;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.post-img {
+    width: 100%;
+}
+.post-tekst {
+    display: flex;
+    width: 98%;
+    justify-content: flex-start;
+    padding: 0.5vw;
+}
+.post-dato {
+    display: flex;
+    width: 98%;
+    justify-content: flex-start;
+    padding: 0.5vw;
+}
+
+
+
+
+/*** END POSTS *********/
