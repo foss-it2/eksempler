@@ -9,6 +9,9 @@ import os
 from models import db, Users, Logg, Posts
 from datetime import datetime
 
+# Pakker som har med innlogging å gjøre
+from flask import session
+
 
 
 app = Flask(__name__,
@@ -94,11 +97,18 @@ def login():
             post = Logg(epost=epost)
             db.session.add(post)
             db.session.commit()
-            return f"Hurra {user.fornavn}! Du er logget inn!"
+            # Setter en session-variabel til innlogget.
+            session["current_user"] = user.epost
+            return render_template("hemmelig_side.html", epost=session["current_user"])
         else:
             return f"Hei {epost}, du har skrevet inn galt passord: {passord}."
     else:
         return render_template("login.html")
+
+@app.route("/logout", methods=['GET', 'POST'])
+def logout():
+    session.clear()
+    return "Du er logget ut."
 
 @app.route("/logg", methods=['GET'])
 def alle_innlogginger():

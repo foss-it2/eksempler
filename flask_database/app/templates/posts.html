@@ -11,6 +11,11 @@
 
   <div>
     <h1>Posts</h1>
+    
+    {% if session["current_user"] %}
+    <h2>{{ session["current_user"] }} er innlogget.</h2>
+    {% endif %}
+
     {% if posts %}
         {% for post in posts %}
         <div class="post-container">
@@ -21,7 +26,7 @@
             </div>
             <div class="hr-white"></div>
             <div class="post-dato">
-                Skrevet av brukerID: {{ post.bruker_id }} -  {{ post.date_added.strftime('%-d. %b %Y %H:%M') }}
+                Skrevet av brukerID: {{ post.bruker_id }} -  {{ post.date_added.strftime('%d. %b %Y %H:%M') }}
             </div>
         </div>
         {% endfor %}

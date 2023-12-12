@@ -24,5 +24,10 @@
         <a href="{{ url_for('add_post') }}">
             <li class="nav-knapp">Legg til Post</li>
         </a>
+        {% if session["current_user"] %}
+            <a href="{{ url_for('logout') }}">
+                <li class="nav-knapp">Logg ut</li>
+            </a>
+        {% endif %}
     </ul>
 </div>
