@@ -24,6 +24,10 @@ class Person:
     def __str__(self):
         return f"{self.fornavn} {self.etternavn}, {self.alder} år"
     
+    def hundeaar(self):
+        hundeaar = self.alder * 7
+        print(f"Jeg er {hundeaar} hundeår gammel. Det er skikkelig mye!")
+    
 # 1) Lag et Person-objekt.
 # 2) Skriv ut alle attributtene til objektet
 h = Person("henrik","m",3)
@@ -31,6 +35,8 @@ print(h)
 # Endrer attributt
 h.alder = 29
 print(h)
+
+h.hundeaar()
 
 nr2 = Person("nr", "2",100)
 nr3 = Person("nr", "TRE", 42)
