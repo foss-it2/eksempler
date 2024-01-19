@@ -9,10 +9,10 @@ class Akvarium:
         self.l = l
         self.b = b
         self.h = h
-        self.fisker = fisker
+        self.fisker = fisker # Liste med fiske-objekter.
 
     def beregnVolum(self):
-        return (self.l * self.b * self.h) / 1000
+        return (self.l * self.b * self.h) # Returnerer cm^3 (ccm)
 
     def vannVolum(self):
         # 1) beregne 90 % av høyden.
@@ -21,20 +21,20 @@ class Akvarium:
         return self.l * self.b * makshøyde
 
     def vannHøyde(self, volum):
-        # Volum er gitt i L: må da gange med 1000 for å få det over i cm^3.
+        # Volum er i cm^3.
         # Returnere vannhøyden ved gitt volum
-        return 1000 * volum / (self.l * self.b)
+        return volum / (self.l * self.b)
 
     def leggTilFisk(self, fisk):
-        if fisk.lengde >= 0.3*self.l:
+        if fisk.lengde >= 0.3*self.l: # 30 % av lengden må være god nok plass.
             print(
-                f"For kort akvarium for {fisk.navn}. Prøv med en lengde på minimum {fisk.lengde*3} cm")
+                f"For kort akvarium for {fisk.navn}. Prøv med en lengde på minimum {fisk.lengde*4} cm")
         elif fisk.lengde >= 0.3*self.b:
             print(
-                f"For smalt akvarium for {fisk.navn}. Prøv med en bredde på minimum {fisk.lengde*3} cm")
+                f"For smalt akvarium for {fisk.navn}. Prøv med en bredde på minimum {fisk.lengde*4} cm")
         elif fisk.lengde >= 0.3*self.h:
             print(
-                f"For lavt akvarium for {fisk.navn}. Prøv med en høyde på minimum {fisk.lengde*3} cm")
+                f"For lavt akvarium for {fisk.navn}. Prøv med en høyde på minimum {fisk.lengde*4} cm")
         else:
             self.fisker.append(fisk)
             print(
@@ -55,8 +55,8 @@ class Fisk:
 class Hvithai(Fisk):
     def __init__(self, navn, lengde, vekt) -> None:
         super().__init__(navn, lengde, vekt)
-        self.vitenskapelignavn = "Carcharodon carcharias"
-        self.favorittmat = "sel"
+        self.vitenskapelignavn = "Carcharodon carcharias" # Gråsone om den skal være i superklasse eller ikke.
+        self.favorittmat = "sel" # Gråsone
 
     def hoppe(self):
         # Returnere 1/0 om den fanget en sel
@@ -80,7 +80,7 @@ class Rognkjeks(Fisk):
         return self.sugdFast
 
     def spis(self):
-        tekst = super().spis() + f" {self.favorittmat}!"
+        tekst = super().spis() + f" {self.favorittmat}. For øyeblikket er den sugd fast: {self.sugdFast}!"
         return tekst
 
 
@@ -89,7 +89,7 @@ def main():
     akv1 = Akvarium(10, 20, 15)
     print(f"Volum av tomt akvarium {akv1.beregnVolum():.1f} L")
     print(f"Volum av maksfylt akvarium {akv1.vannVolum():.1f} cm^3")
-    print(f"2 liter vann når opp i høyde {akv1.vannHøyde(2):.1f} cm")
+    print(f"2000 cm^3 vann når opp i høyde {akv1.vannHøyde(2000):.1f} cm")
 
     # Lager en fisk.
     torsk = Fisk("Torsk", 34, 0.4)
