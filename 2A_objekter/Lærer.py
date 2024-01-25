@@ -15,9 +15,11 @@ class Laerer(Person):
         super().__init__(fornavn, etternavn, foedselsaar)
         self.fag = fag
         self.kontaktklasse = kontaktklasse
+    
     def sjekkfag(self, fagnavn: str):
         """ Metoden sjekker om læreren underviser i et gitt fag """
         return fagnavn in self.fag
+    
     def visInfo(self, aarstall):
         """ Metoden skriver ut informasjon om læreren """
         super().visInfo(aarstall)
