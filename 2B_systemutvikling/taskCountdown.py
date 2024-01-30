@@ -10,7 +10,7 @@ import datetime as dt
 #tid1 = dt.datetime.now()
 
 tid1 = dt.datetime.fromtimestamp(1e9)
-tid2 = dt.datetime.fromtimestamp(1e9 + 533333)
+tid2 = dt.datetime.fromtimestamp(100e9 + 33333)
 
 differanse = tid2 - tid1
 print(differanse)
@@ -23,4 +23,4 @@ sekunder -= timer * 3600
 minutter = sekunder // 60
 sekunder -= minutter * 60
 
-print(f"{dager} dager, {timer} timer, {minutter} minutter")
+print(f"{dager} dager, {timer} timer, {minutter} minutter, {sekunder} sekunder.")
