@@ -27,7 +27,7 @@ v_verdier = [v]  # liste for lagring av fart
 t_verdier = [t]  # liste for lagring av tid
 
 # Løkke som beregner ny fart, posisjon og tid
-while s <= 6000:  # så lenge...
+while t <= 20 :  # så lenge...
   v = v + a(v)*dt   # regner ut ny v og overskriver gammel
   s = s + v*dt      # regner ut ny s og overskriver gammel
   t = t + dt        # regner ut ny t og overskriver gammel

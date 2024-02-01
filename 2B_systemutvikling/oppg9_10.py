@@ -57,8 +57,8 @@ class Tidspunkt:
         return self.datotid.strftime("%Y")
     
     def tid(self):  
-        """Gir tiden som HH:MM:SS"""
-        return self.datotid.strftime("%H:%M:%S")  # https://www.w3schools.com/python/python_datetime.asp
+        """Gir tiden som HH:MM:SS i tolvtimersformat."""
+        return self.datotid.strftime("%I%p:%M:%S")  # https://www.w3schools.com/python/python_datetime.asp
 
 
 def main():
@@ -66,7 +66,7 @@ def main():
 
 
     print(naa.dato())
-    print(naa.maaned())
+    print(naa.maaned(3))
     print(naa.tid())
     print(f"{naa.dato()} er i måned {naa.maaned()} = {naa.tidsstempel()}")
 
