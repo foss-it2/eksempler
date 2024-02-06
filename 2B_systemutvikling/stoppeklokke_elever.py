@@ -14,7 +14,7 @@ class Stoppeklokke:
     
     def utskrift(self):
         for tid in self.splittider:
-            print(tid)
+            print(f"{tid.seconds}.{tid.microseconds}")
     
     def startKlokke(self):
         self.isrunning = True
