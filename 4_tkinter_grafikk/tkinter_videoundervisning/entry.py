@@ -3,7 +3,7 @@ Entry med tkinter
 Dokumentasjon: https://realpython.com/python-gui-tkinter/"
 """
 import tkinter as tk
-from tkmacosx import Button as macButton
+#from tkmacosx import Button as macButton
 
 window = tk.Tk()  # lager et Tk-objekt fra biblioteket tkinter.
 windowWidth = 500   # Størrelse i pixler.
