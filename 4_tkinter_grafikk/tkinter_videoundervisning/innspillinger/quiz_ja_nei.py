@@ -16,10 +16,13 @@ questions = [
 ]
 
 def trekkSpm():
-    index = randint(0, len(questions)-1)
-    spm = questions[index]
-    questions.remove(spm)
-    return spm
+    if len(questions) > 0:
+        index = randint(0, len(questions)-1)
+        spm = questions[index]
+        questions.remove(spm)
+        return spm
+    else:
+        return None
 
 
 # 1) Lage en header boks
@@ -108,11 +111,14 @@ spm = ""
 poeng = 0
 
 def nyttSpm():
-    global spm
+    global spm, poeng
     # Trekker spm
     spm = trekkSpm()
-    # Skriver spm på skjerm
-    tekst2["text"] = spm[0]
+    if spm is not None:
+        # Skriver spm på skjerm
+        tekst2["text"] = spm[0]
+    else:
+        tekst2["text"] = f"Ferdig! Poeng: {poeng}"
 
 nyttSpm()
 
