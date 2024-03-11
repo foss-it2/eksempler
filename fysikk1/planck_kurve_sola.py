@@ -16,8 +16,12 @@ h = 6.63e-34
 c = 3.00e8
 k = 1.38e-23
 pi = np.pi
+a = 2.90e-3 # Konstant i Wiens forskyvningslov.
 
 T = 5780   # temperatur i kelvin
+
+# Beregner Wiens forskyvningslov
+x_wien = a / T
 
 
 # Definerer x-aksen
@@ -44,6 +48,8 @@ for i in range(0, len(x)):
 # Finner toppunktet
 maxIndex = np.argmax(sol)
 print(x[maxIndex])
+# Legger bølgelengde-topp fra Wiens forskyvningslov rett over toppunktet
+y_wien = sol[maxIndex]*1.1
 
 # Lager et nytt x-array som er zoomet inn
 x2 = np.linspace(200e-9, 1500e-9, 200)
@@ -56,10 +62,10 @@ for i in range(0, len(x2)):
     sol2.append(p_sol2)
 
 # Plotte kurver og punkter
-plt.plot(x, sol, "-b", label="Sol, 5780K")
-#plt.plot(x2,sol2, "-r", label="Sol zoom, 5780K") # Plotte zoomet inn
+#plt.plot(x, sol, "-b", label="Sol, 5780K")
+plt.plot(x2,sol2, "-r", label="Sol zoom, 5780K") # Plotte zoomet inn
 plt.plot(x[maxIndex], sol[maxIndex], 'ro',label="$T_{topp}$=" + f"{1e9*x[maxIndex]:.1f} nm")
-plt.plot(x_wien, y_wien, "-k", label="Wiens forsk.lov")
+plt.plot(x_wien, y_wien, "kx", label="Wiens forskyvningslov")
 plt.legend(loc="upper right")
 plt.xlabel("Bølgelengde (m)")
 plt.ylabel("U (W/m2\u2022m)")
