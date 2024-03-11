@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import PhotoImage
 
 window = tk.Tk()
 frame1 = tk.Frame(window)
@@ -10,24 +9,18 @@ canvas_height = 500
 canvas_width = windowWidth
 window.minsize(windowWidth, windowHeight)    # Setter størrelsen.
 
-
-# 1) Lager en ramme som canvas kan ligge inni
-canvas_frame = tk.Frame(window)
-canvas_frame.pack()
-
-# 2) Lager en header for overskrift
-header = tk.Canvas(canvas_frame, width=windowWidth, height=100)
+# 1) Lager en header for overskrift
+header = tk.Canvas(frame1, width=windowWidth, height=100)
 header.pack()
 overskrift = tk.Label(header, text="Akselerasjon")
 overskrift.pack()
 
+# 2) Lager en ramme som canvas kan ligge inni
+canvas_frame = tk.Frame(window)
+canvas_frame.pack()
 
-
-
-# Lager en NY ramme som selve spill-canvas kan ligge inni.
-frame2 = tk.Frame(window)
-frame2.pack()
-canvas = tk.Canvas(frame2, width=canvas_width, height=canvas_height, background="black")
+canvas = tk.Canvas(canvas_frame, width=canvas_width,
+                   height=canvas_height, background="black")
 canvas.pack()
 
 # 3) Lag sirkel-klassen som har informasjonen om sirkel: xpos, ypos, retning etc.
@@ -89,7 +82,7 @@ while isRunning == True:
     canvas.update()
     fjernSirkel()
     sirkel.y += sirkel.delta_y
-    sirkel.delta_y = sirkel.delta_y * sirkel.akselerasjon   # Øker steglengden med akselerasjonen
+    sirkel.delta_y = sirkel.delta_y + 0.1*sirkel.akselerasjon   # Øker steglengden med akselerasjonen
     # Sjekker kollisjon med bunnen av vinduet.
     sjekkKollisjon()
     print(sirkel.x)
