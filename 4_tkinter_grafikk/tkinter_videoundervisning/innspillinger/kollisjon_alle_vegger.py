@@ -29,7 +29,6 @@ canvas.pack()
 class Sirkel:
     def __init__(self):
         self.R = 20  # radius
-        self.farge = "yellow"
         self.x = canvas_height / 2
         self.y = canvas_width / 2 # Plasserer i midten av vinduet
         self.fill = "yellow"
@@ -62,15 +61,15 @@ def sjekkKollisjon():
         # Flytter sirkelen HELT vekk fra vegg i tilfelle den setter seg fast
         sirkel.y = canvas_height - sirkel.R
     # venstre
-    elif sirkel.x - sirkel.R <= 0:
+    if sirkel.x - sirkel.R <= 0:
         sirkel.delta_x = -sirkel.delta_x
         sirkel.x = sirkel.R
     # topp
-    elif sirkel.y - sirkel.R <= 0:
+    if sirkel.y - sirkel.R <= 0:
         sirkel.delta_y = -sirkel.delta_y
         sirkel.y = sirkel.R
     # høyre
-    elif sirkel.x + sirkel.R >= canvas_width:
+    if sirkel.x + sirkel.R >= canvas_width:
         sirkel.delta_x = -sirkel.delta_x
         sirkel.x = canvas_width - sirkel.R
         

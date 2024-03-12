@@ -12,7 +12,7 @@ window.minsize(windowWidth, windowHeight)    # Setter størrelsen.
 # 1) Lager en header for overskrift
 header = tk.Canvas(frame1, width=windowWidth, height=100)
 header.pack()
-overskrift = tk.Label(header, text="Kollisjon")
+overskrift = tk.Label(header, text="Animasjonsloop")
 overskrift.pack()
 
 # 2) Lager en ramme som canvas kan ligge inni
@@ -25,14 +25,16 @@ canvas.pack()
 
 # 3) Lag sirkel-klassen som har informasjonen om sirkel: xpos, ypos, retning etc.
 
+
 class Sirkel:
     def __init__(self):
         self.R = 20  # radius
-        self.farge = "yellow"
         self.x = windowWidth / 2
-        self.y = 1.5 * 2 * self.R # Plasserer litt nedenfor toppen av vinduet
+        self.y = 2 * self.R # Plasserer litt nedenfor toppen av vinduet
         self.fill = "yellow"
         self.outline = "yellow"
+        self.delta_y = 5
+        self.delta_x = 5
 
 
 sirkel = Sirkel()
@@ -48,13 +50,25 @@ def tegnSirkel():
 def fjernSirkel():
     canvas.delete("sirkel")
 
+
 def sjekkKollisjon():
-    global isRunning
+    """Sjekker for kolllisjon med alle sidene i vinduet."""
+    # Bunn
     if sirkel.y + sirkel.R >= canvas_height:
-        isRunning = False
-        tegnSirkel()
-
-
+        sirkel.delta_y = -sirkel.delta_y
+        sirkel.y = canvas_height - sirkel.R*1.01
+    # høyre
+    if sirkel.x + sirkel.R >= canvas_width:
+        sirkel.delta_x = -sirkel.delta_x
+        sirkel.x = canvas_width - sirkel.R*1.01
+    # topp
+    if sirkel.y - sirkel.R <= 0:
+        sirkel.delta_y = -sirkel.delta_y
+        sirkel.y = sirkel.R*1.01
+    # venstre
+    if sirkel.x - sirkel.R <= 0:
+        sirkel.delta_x = -sirkel.delta_x
+        sirkel.x = sirkel.R*1.01
 
 # avsluttknapp
 footer = tk.Frame(window)
@@ -78,12 +92,12 @@ while isRunning == True:
     canvas.after(10)  # venter 100 ms
     canvas.update()
     fjernSirkel()
-    sirkel.y += 5
-    # Sjekker kollisjon med bunnen av vinduet.
+    sirkel.y += sirkel.delta_y
+    sirkel.x += sirkel.delta_x
+    print(sirkel.y)
     sjekkKollisjon()
-    print(sirkel.x)
     teller += 1
-    if teller >= 5000:
+    if teller >= 2000000:
         isRunning = False
         tegnSirkel()
 

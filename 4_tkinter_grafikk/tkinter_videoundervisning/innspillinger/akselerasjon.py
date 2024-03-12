@@ -82,7 +82,7 @@ while isRunning == True:
     canvas.update()
     fjernSirkel()
     sirkel.y += sirkel.delta_y
-    sirkel.delta_y = sirkel.delta_y + 0.1*sirkel.akselerasjon   # Øker steglengden med akselerasjonen
+    sirkel.delta_y = sirkel.delta_y * sirkel.akselerasjon   # Øker steglengden med akselerasjonen
     # Sjekker kollisjon med bunnen av vinduet.
     sjekkKollisjon()
     print(sirkel.x)

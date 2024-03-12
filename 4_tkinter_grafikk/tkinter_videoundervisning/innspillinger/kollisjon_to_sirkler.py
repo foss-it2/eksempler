@@ -27,18 +27,21 @@ canvas.pack()
 
 
 class Sirkel:
-    def __init__(self,navn, xpos=canvas_width/2, ypos=canvas_height/2,delta_x=1,delta_y=0):
+    def __init__(self,navn, 
+                 xpos=canvas_width/2, 
+                 ypos=canvas_height/2,
+                 delta_x=1,delta_y=0,
+                 fill="#ffff00", ouline="#ffff00"):
         self.R = 20  # radius
-        self.farge = "yellow"
         self.x = xpos
         self.y = ypos # Plasserer i midten av vinduet
-        self.fill = "yellow"
-        self.outline = "yellow"
+        self.fill = fill
+        self.outline = ouline
         self.delta_y = delta_y
         self.delta_x = delta_x
-        self.navn = navn
+        self.tag = navn
     
-    def sjekkKollisjon(self):
+    def sjekkKollisjon(self, sirkler):
         """Sjekker kollisjon med alle vegger"""
         global isRunning
         # bunnen
@@ -47,31 +50,49 @@ class Sirkel:
             # Flytter seg selv HELT vekk fra vegg i tilfelle den setter seg fast.
             self.y = canvas_height - self.R
         # venstre
-        elif self.x - self.R <= 0:
+        if self.x - self.R <= 0:
             self.delta_x = -self.delta_x
             self.x = self.R
         # topp
-        elif self.y - self.R <= 0:
+        if self.y - self.R <= 0:
             self.delta_y = -self.delta_y
             self.y = self.R
         # høyre
-        elif self.x + self.R >= canvas_width:
+        if self.x + self.R >= canvas_width:
             self.delta_x = -self.delta_x
             self.x = canvas_width - self.R
+        # Sjekk kollisjon mot alle andre sirkler i listen
+        for sirkel in sirkler:
+            if sirkel.tag == self.tag:  # Hvis sirkelen som sjekkes er seg selv.
+                continue
+            if abs(sirkel.x - self.x) <= sirkel.R + self.R:
+                print("kollisjon!")
+                # Flytt sirklene like langt vekk til hver side før fart settes motsatt.
+                self.x -= self.delta_x
+                self.delta_x = -self.delta_x
+                sirkel.x -= sirkel.delta_x
+                sirkel.delta_x = -sirkel.delta_x
+
+    
+    def tegnSirkel(self):
+        canvas.create_oval(self.x-self.R, self.y-self.R,
+                        self.x+self.R, self.y+self.R,
+                        fill=self.fill, outline=self.outline, tags=self.tag)
 
 
-sirkel = Sirkel("sirkel1",canvas_width/4,canvas_height/2)
+    def fjernSirkel(self):
+        canvas.delete(self.tag)
+    
+    def oppdater(self):
+        self.x += self.delta_x
+        self.y += self.delta_y
 
 
-# 4) Animer sirkel
-def tegnSirkel(objekt_tag):
-    canvas.create_oval(sirkel.x-sirkel.R, sirkel.y-sirkel.R,
-                       sirkel.x+sirkel.R, sirkel.y+sirkel.R,
-                       fill=sirkel.fill, outline=sirkel.outline, tags=objekt_tag)
+sirkelA = Sirkel("sirkelA",canvas_width/2.5,canvas_height/2,3,0,"yellow","yellow")
+sirkelB = Sirkel("sirkelB",3*canvas_width/4,canvas_height/2,-3,0,"deeppink","white")
 
+sirkler = [sirkelA, sirkelB]
 
-def fjernSirkel(objekt_tag):
-    canvas.delete(objekt_tag)
 
 
 # avsluttknapp
@@ -92,19 +113,24 @@ avslutt.bind("<Button-1>", handle_avslutt)
 teller = 0
 isRunning = True
 while isRunning == True:
-    tegnSirkel(sirkel.navn)
+    # Tegn alle sirkler i listen
+    for sirkel in sirkler:
+        sirkel.tegnSirkel()
     canvas.after(10)  # venter 100 ms
     canvas.update()
-    fjernSirkel(sirkel.navn)
-    sirkel.x += sirkel.delta_x
-    sirkel.y += sirkel.delta_y
-    # Sjekker kollisjon med bunnen av vinduet.
-    sirkel.sjekkKollisjon()
-    print(sirkel.x)
+    # Fjern alle sirkler i listen
+    for sirkel in sirkler:
+        sirkel.fjernSirkel()
+        sirkel.oppdater()  # Oppdaterer posisjon og eventuelt fart.
+    # Sjekker kollisjon med vegger og med andre sirkler.
+    for sirkel in sirkler:
+        sirkel.sjekkKollisjon(sirkler)  # Legger ved listen.
     teller += 1
-    if teller >= 5000:
+    if teller >= 5000:  # Manuell stans etter n antall frames.
         isRunning = False
-        tegnSirkel(sirkel.navn)
+        # Tegn alle sirkler i listen
+        for sirkel in sirkler:
+            sirkel.tegnSirkel()
 
 
 window.mainloop()
