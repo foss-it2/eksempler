@@ -12,7 +12,7 @@ window.minsize(windowWidth, windowHeight)    # Setter størrelsen.
 # 1) Lager en header for overskrift
 header = tk.Canvas(frame1, width=windowWidth, height=100)
 header.pack()
-overskrift = tk.Label(header, text="Kollisjon mellom to sirkler.")
+overskrift = tk.Label(header, text="Kollisjon mellom mange sirkler.")
 overskrift.pack()
 
 # 2) Lager en ramme som canvas kan ligge inni
@@ -71,15 +71,20 @@ class Sirkel:
             d = (dx**2 + dy**2)**0.5
             if d <= sirkel.R + self.R:
                 print(f"{self.tag} mot {sirkel.tag}")
-                # Flytt sirklene like langt vekk til hver side før fart settes motsatt.
-                self.x -= self.delta_x
-                self.delta_x = -self.delta_x
-                self.y -= self.delta_y
-                self.delta_y = -self.delta_y
+                # Bruker prinsipp for bevegelsesmengde forenklet:
+                # Bytter fart og retning med den andre sirkelen.
+                # 1) Flytter sirklene tilbake ett steg før kollisjon.
+                self.x -= self.delta_x 
                 sirkel.x -= sirkel.delta_x
-                sirkel.delta_x = -sirkel.delta_x
+                self.y -= self.delta_y
                 sirkel.y -= sirkel.delta_y
-                sirkel.delta_y = -sirkel.delta_y
+                # 2) Bytter om fart
+                temp_x = self.delta_x
+                temp_y = self.delta_y
+                self.delta_x = sirkel.delta_x
+                self.delta_y = sirkel.delta_y
+                sirkel.delta_x = temp_x
+                sirkel.delta_y = temp_y
 
     
     def tegnSirkel(self):
@@ -96,10 +101,13 @@ class Sirkel:
         self.y += self.delta_y
 
 
-sirkelA = Sirkel("sirkelA",canvas_width/2.5,canvas_height/2,3,0,"yellow","yellow")
-sirkelB = Sirkel("sirkelB",3*canvas_width/4,canvas_height/2,-3,0,"deeppink","white")
+sirkelA = Sirkel("sirkelA",canvas_width/2.5,canvas_height/2,3,1,"yellow","yellow")
+sirkelB = Sirkel("sirkelB",3*canvas_width/4,canvas_height/2,-3,8,"deeppink","white")
+sirkelC = Sirkel("sirkelC",1*canvas_width/4,canvas_height/2,5,5,"dodgerblue","white")
+sirkelD = Sirkel("sirkelD",2*canvas_width/5,canvas_height/3,2,5,"chartreuse","white")
+sirkelE = Sirkel("sirkelE",1.5*canvas_width/3,canvas_height/4,5,-4,"peachpuff","white")
 
-sirkler = [sirkelA, sirkelB]
+sirkler = [sirkelA, sirkelB, sirkelC, sirkelD, sirkelE]
 
 
 
@@ -118,12 +126,13 @@ avslutt.bind("<Button-1>", handle_avslutt)
 
 
 # Her animinerer vi
+teller = 0
 isRunning = True
 while isRunning == True:
     # Tegn alle sirkler i listen
     for sirkel in sirkler:
         sirkel.tegnSirkel()
-    canvas.after(10)  # venter 10 ms
+    canvas.after(10)  # venter 100 ms
     canvas.update()
     # Fjern alle sirkler i listen
     for sirkel in sirkler:
@@ -132,6 +141,7 @@ while isRunning == True:
     # Sjekker kollisjon med vegger og med andre sirkler.
     for sirkel in sirkler:
         sirkel.sjekkKollisjon(sirkler)  # Legger ved listen.
+    teller += 1
 
 
 window.mainloop()
