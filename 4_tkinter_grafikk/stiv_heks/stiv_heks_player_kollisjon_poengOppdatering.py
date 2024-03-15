@@ -24,6 +24,9 @@ canvas = tk.Canvas(canvas_frame, width=canvas_width,
                    height=canvas_height, background="black")
 canvas.pack()
 
+svar = tk.Label(text=f"Poeng: 0")
+svar.pack()
+
 
 """ 
 Beskrivelser av klasser
@@ -88,6 +91,8 @@ class Spill:
     def kollisjon(self):
         """Sjekker kollisjon med vegger og med andre objekter."""
         self.player.sjekkKollisjonVegger()
+        for obj in self.objekter:
+            self.player.sjekkKollisjon(self, obj)
     
     def slett(self,objekt):
         """Sletter et objekt totalt fra spillet."""
@@ -186,9 +191,18 @@ class Player(Objekt):
         self.x += self.x_fart * self.x_retning
         self.y += self.y_fart * self.y_retning
     
+    poeng = 0
     def sjekkKollisjon(self, spill, objekt):
         """Kollisjon må håndteres ved å se på overlapp av to rektangler. Ikke Pythagoras som for sirkel."""
-        pass
+        if abs(self.x - objekt.x) <= self.l + objekt.l and abs(self.y - objekt.y) <= self.b + objekt.b:
+            print("kollisjon")
+            #spill.isRunning = False
+            # sletter NPC-objekter
+            spill.slett(objekt)
+            spill.leggTilNPC()
+            Player.poeng += 1
+            svar["text"] = f"Poeng: {Player.poeng}"
+
 
             
 
@@ -268,6 +282,8 @@ while spill.isRunning == True:
     spill.fjernOgOppdater()
     # Sjekker kollisjon med vegger og med andre objekter.
     spill.kollisjon()
+
+spill.tegn() # tegner alle objekter til slutt en siste gang
 
 
 

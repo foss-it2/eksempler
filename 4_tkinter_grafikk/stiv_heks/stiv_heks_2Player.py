@@ -24,6 +24,11 @@ canvas = tk.Canvas(canvas_frame, width=canvas_width,
                    height=canvas_height, background="black")
 canvas.pack()
 
+poeng1 = tk.Label(text=f"Player 1: 0 poeng")
+poeng1.pack()
+poeng2 = tk.Label(text=f"Player 2: 0 poeng")
+poeng2.pack()
+
 
 """ 
 Beskrivelser av klasser
@@ -70,12 +75,14 @@ class Spill:
         self.heks = None
         self.player = None
         self.isRunning = True
+        self.player2 = None
     
     def tegn(self):
         """ Tegner alle objekter i listen"""
         for obj in spill.objekter:
             obj.tegn()
         self.player.tegn()
+        self.player2.tegn()
     
     def fjernOgOppdater(self):
         """# Fjern alle objekter i listen samt player, og oppdater"""
@@ -83,11 +90,17 @@ class Spill:
             obj.fjern()
             obj.oppdater()
         self.player.fjern()
+        self.player2.fjern()
         self.player.oppdater()
+        self.player2.oppdater()
     
     def kollisjon(self):
         """Sjekker kollisjon med vegger og med andre objekter."""
         self.player.sjekkKollisjonVegger()
+        self.player2.sjekkKollisjonVegger()
+        for obj in self.objekter:
+            self.player.sjekkKollisjon(self, obj)
+            self.player2.sjekkKollisjon(self, obj)
     
     def slett(self,objekt):
         """Sletter et objekt totalt fra spillet."""
@@ -110,6 +123,11 @@ class Spill:
             if abs(x - objekt.x) <= 25 + objekt.l and abs(y - objekt.y) <= 25 + objekt.b:
                 return False
         return True
+
+    def oppdaterPoeng(self):
+        # Oppdaterer begge tekstboksene
+        poeng1["text"] = f"Player 1: {spill.player.poeng} poeng"
+        poeng2["text"] = f"Player 2: {spill.player2.poeng} poeng"
 
 class Objekt:
     """
@@ -176,10 +194,11 @@ class Objekt:
 
 class Player(Objekt):
     """Bevegelig helt!"""
-    def __init__(self):
+    def __init__(self,farge="dodgerblue", navn="Player"):
         self.x_retning = 1
         self.y_retning = 0
-        super().__init__("Player", 40,canvas_height-40, 3, 3, "dodgerblue", "dodgerblue", 20, 20)
+        self.poeng = 0
+        super().__init__(navn, 40,canvas_height-40, 3, 3, farge, farge, 20, 20)
     
     def oppdater(self):
         """Må oppdatere posisisjon og fart"""
@@ -188,7 +207,20 @@ class Player(Objekt):
     
     def sjekkKollisjon(self, spill, objekt):
         """Kollisjon må håndteres ved å se på overlapp av to rektangler. Ikke Pythagoras som for sirkel."""
-        pass
+        if abs(self.x - objekt.x) <= self.l + objekt.l and abs(self.y - objekt.y) <= self.b + objekt.b:
+            print("kollisjon")
+            #spill.isRunning = False
+            # sletter NPC-objekter
+            spill.slett(objekt)
+            antall = randint(1,3)
+            for i in range(antall):
+                if len(spill.objekter) <= 5:
+                    spill.leggTilNPC()
+            self.poeng += 1
+            if self.poeng >= 50:
+                spill.isRunning = False
+            spill.oppdaterPoeng()
+
 
             
 
@@ -216,7 +248,10 @@ spill.leggTilNPC()
 
 
 """ Lag player"""
-spill.player = Player()
+spill.player = Player(navn="Player1")
+spill.player2 = Player("peachpuff", navn="Player2")
+spill.player2.x_retning = 0
+spill.player2.y_retning = -1
 
 
 """Lag en heks"""
@@ -251,6 +286,18 @@ def processKeypress(evt):
     elif key == "Down":
         spill.player.x_retning = 0
         spill.player.y_retning = 1
+    if key == "a":
+        spill.player2.x_retning = -1
+        spill.player2.y_retning = 0
+    elif key == "w":
+        spill.player2.x_retning = 0
+        spill.player2.y_retning = -1
+    elif key == "d":
+        spill.player2.x_retning = 1
+        spill.player2.y_retning = 0
+    elif key == "s":
+        spill.player2.x_retning = 0
+        spill.player2.y_retning = 1
 
 avslutt.bind("<Button-1>", handle_avslutt)
 
@@ -268,6 +315,12 @@ while spill.isRunning == True:
     spill.fjernOgOppdater()
     # Sjekker kollisjon med vegger og med andre objekter.
     spill.kollisjon()
+
+spill.tegn() # tegner alle objekter til slutt en siste gang
+if spill.player.poeng > spill.player2.poeng:
+    print("Player 1 vant!")
+else:
+    print("Player 2 vant!")
 
 
 

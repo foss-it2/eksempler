@@ -88,6 +88,8 @@ class Spill:
     def kollisjon(self):
         """Sjekker kollisjon med vegger og med andre objekter."""
         self.player.sjekkKollisjonVegger()
+        for obj in self.objekter:
+            self.player.sjekkKollisjon(self, obj) # Sjekker kollisjon mellom spiller og objekt.
     
     def slett(self,objekt):
         """Sletter et objekt totalt fra spillet."""
@@ -188,7 +190,14 @@ class Player(Objekt):
     
     def sjekkKollisjon(self, spill, objekt):
         """Kollisjon må håndteres ved å se på overlapp av to rektangler. Ikke Pythagoras som for sirkel."""
-        pass
+        if abs(self.x - objekt.x) <= self.l + objekt.l and abs(self.y - objekt.y) <= self.b + objekt.b:
+            print("kollisjon")
+            #spill.isRunning = False
+            # Sletter NPC-objektet
+            spill.slett(objekt)
+            spill.leggTilNPC()
+            # TODO: Legg til poeng
+
 
             
 
@@ -196,7 +205,7 @@ class NPC(Objekt):
     """Stillestående objekt som skal tas av heks, men befris av Player."""
     teller = 1
     def __init__(self,xpos = canvas_width/2, ypos = canvas_height/2):
-        self.aktiv = True        
+        self.aktiv = True       
         super().__init__(f"NPC{NPC.teller}", xpos, ypos, 0, 0, "#ffff00", "#ffff00", 20, 20)
         NPC.teller += 1 # Øker klassevariabelen med 1.
     
@@ -269,6 +278,6 @@ while spill.isRunning == True:
     # Sjekker kollisjon med vegger og med andre objekter.
     spill.kollisjon()
 
-
+spill.tegn() # Tegner alle objekter til slutt for siste gang.
 
 window.mainloop()
