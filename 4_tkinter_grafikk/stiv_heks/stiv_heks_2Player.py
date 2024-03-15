@@ -264,9 +264,7 @@ footer.pack()
 avslutt = tk.Button(footer, text="Avslutt")
 avslutt.pack()
 
-
 def handle_avslutt(event):
-    global spill
     spill.isRunning = False
     window.destroy()
 

@@ -1,0 +1,1 @@
+window.bind("<Up>", on_up_key)
