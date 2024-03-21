@@ -12,6 +12,8 @@ linjer = []
 
 filnavn = "tall.txt"
 
+utliste = []
+
 with open(filnavn, encoding="utf-8") as fil:
   for linje in fil:
     #linjer.append(linje)
@@ -19,9 +21,12 @@ with open(filnavn, encoding="utf-8") as fil:
     # Fjern linjeskift og del opp i ord
     miniliste = linje.rstrip().split("-") # resultat av split() gir liste
     sum = 0
+    tall_streng = ""
     for tall in miniliste:
       sum += int(tall)
+      tall_streng += tall + " "
     snitt = sum / len(miniliste)
-    print(f"sum: {sum},    gjennomsnitt: {snitt}")
+    #print(f"Tall {tall_streng} sum: {sum},    gjennomsnitt: {snitt}")
+    utliste.append(f"Tall {tall_streng} sum: {sum},    gjennomsnitt: {snitt}")
 
-print(linjer)
+print(utliste)
