@@ -11,7 +11,7 @@ dekryptert_filnavn = filnavn + "_dekryptert.txt"
 with open(filnavn, encoding="utf-8") as fil:
   innhold = fil.read()
 
-kryptert = caesar_cipher_decrypt(innhold,7)
+dekryptert = caesar_cipher_decrypt(innhold,7)
 
 with open(dekryptert_filnavn, "w") as fil:
-  fil.write(kryptert)
+  fil.write(dekryptert)
