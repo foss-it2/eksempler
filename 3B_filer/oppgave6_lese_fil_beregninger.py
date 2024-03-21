@@ -9,9 +9,7 @@ Tall: 2 4 8 4 12,    sum: 30,    gjennomsnitt: 6
 """
 
 linjer = []
-
 filnavn = "tall.txt"
-
 utliste = []
 
 with open(filnavn, encoding="utf-8") as fil:
@@ -29,4 +27,12 @@ with open(filnavn, encoding="utf-8") as fil:
     #print(f"Tall {tall_streng} sum: {sum},    gjennomsnitt: {snitt}")
     utliste.append(f"Tall {tall_streng} sum: {sum},    gjennomsnitt: {snitt}")
 
-print(utliste)
+with open("sum_og_snitt.txt", "w") as fil:
+  fil.write("Flotte summer og gjennomsnitt :)")
+
+with open("sum_og_snitt.txt", "a") as fil:
+  for linje in utliste:
+      fil.write("\n")
+      fil.write(linje)
+
+
