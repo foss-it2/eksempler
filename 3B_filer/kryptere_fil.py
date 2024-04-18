@@ -2,7 +2,7 @@
 Krypterer en fil med Caesar-kryptering.
 """
 
-from caesar_cipher import caesar_cipher_encrypt, caesar_cipher_decrypt
+from caesar_cipher import caesar_cipher_encrypt
 
 filnavn = "MikkelRev.txt"
 kryptert_filnavn = filnavn + "_kryptert.txt"
