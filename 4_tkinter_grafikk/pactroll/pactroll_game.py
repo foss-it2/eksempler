@@ -1,6 +1,8 @@
 import tkinter as tk
 import time
 
+from klasser import *
+
 window = tk.Tk()
 frame1 = tk.Frame(window)
 frame1.pack()
@@ -28,26 +30,6 @@ canvas.pack()
 
 
 
-
-# 4) Animer sirkel
-def tegnSirkel():
-    canvas.create_oval(sirkel.x-sirkel.R, sirkel.y-sirkel.R,
-                       sirkel.x+sirkel.R, sirkel.y+sirkel.R,
-                       fill=sirkel.fill, outline=sirkel.outline, tags="sirkel")
-
-
-def fjernSirkel():
-    canvas.delete("sirkel")
-
-
-def sjekkKollisjon():
-    global isRunning
-    if sirkel.y + sirkel.R >= canvas_height:
-        sirkel.delta_y = 0
-        # isRunning = False
-        tegnSirkel()
-
-
 # avsluttknapp
 footer = tk.Frame(window)
 footer.pack()
@@ -61,6 +43,15 @@ def handle_avslutt(event):
 
 avslutt.bind("<Button-1>", handle_avslutt)
 
+# 1) Lager en brikke
+# 2) Lage spill, fylles med brikke(r)
+# 3) Animere
+
+brikke = Brikke(40,40,50,100)
+spill = Spill(canvas_width, canvas_height,[brikke],canvas)
+print(spill.brikker)
+
+spill.oppdater()
 
 # Her animinerer vi
 start_tid = time.time()
