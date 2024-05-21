@@ -1,1 +1,1 @@
-Akselerasjon
+d
