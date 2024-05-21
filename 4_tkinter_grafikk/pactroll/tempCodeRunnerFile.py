@@ -1,0 +1,2 @@
+
+                menneske.kollisjon(o, brett)

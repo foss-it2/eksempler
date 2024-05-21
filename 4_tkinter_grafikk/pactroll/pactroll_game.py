@@ -49,7 +49,6 @@ avslutt.bind("<Button-1>", handle_avslutt)
 
 brikke = Brikke(40,40,50,100)
 spill = Spill(canvas_width, canvas_height,[brikke],canvas)
-print(spill.brikker)
 
 spill.oppdater()
 
@@ -62,6 +61,8 @@ intervall = 1 / fps
 while isRunning:
     if time.time() - forrige_tid >= intervall:
         forrige_tid = time.time()
+        
+
         
 
     # Refresh vindu

@@ -13,25 +13,31 @@ class Spill(Firkant):
         super().__init__(w, h, "black")
         self.brikker = brikker
         self.canvas = canvas
+        self.troll = Troll(30,200)
+        print(self.troll.tags)
     
     def oppdater(self):
         # Slett alle ting i canvas
         for brikke in self.brikker:
             brikke.slettBrikke(self.canvas)
+        self.troll.slettBrikke(self.canvas)
+        
         # Utføre flytting
+        self.troll.endrePos()
 
         # Sjekk kollisjon
 
         # Tegne på nytt
         for brikke in self.brikker:
-            print(brikke.tags)
             brikke.tegnBrikke(self.canvas)
+        self.troll.tegnBrikke(self.canvas)
 
     def leggUtMat(self):
         pass
 
     def handleKeys(self,evt):
         pass
+        
 
 class Brikke(Firkant):
     teller = 1
@@ -56,4 +62,28 @@ class Brikke(Firkant):
     
     def settId(self):
         self.tags = f"id{Brikke.teller}"
+        print(self.tags)
         Brikke.teller += 1
+
+class Troll(Brikke):
+    def __init__(self, xpos, ypos) -> None:
+        super().__init__(30, 30, xpos, ypos)
+        self.vx = 1
+        self.vy = 0
+        self.poeng = 0
+        self.farge = "chartreuse"
+        
+    def endreRetning(self,retning, verdi):
+        if retning == "x":
+            self.vx = verdi # +-1
+            self.vy = 0
+        else:
+            self.vx = 0
+            self.vy = verdi
+    
+    def endrePos(self):
+        self.x += self.vx
+        self.y += self.vy
+    
+    def sjekkKollisjon(self,objekt):
+        pass
