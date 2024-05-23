@@ -33,6 +33,7 @@ class Spill(Firkant):
         self.troll.tegnBrikke(self.canvas)
 
     def leggUtMat(self):
+        # 1) Tilfeldig funksjon
         pass
 
     def handleKeys(self,evt):
@@ -54,7 +55,8 @@ class Brikke(Firkant):
             self.y - self.h/2,
             self.x + self.w/2,
             self.y + self.h/2,
-            fill=self.farge
+            fill=self.farge,
+            outline="black" # Viktig å ha med outline pga. default er å tegne med lys outline.
         )
 
     def slettBrikke(self,canvas):

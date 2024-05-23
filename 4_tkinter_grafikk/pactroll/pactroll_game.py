@@ -41,6 +41,14 @@ def handle_avslutt(event):
     window.destroy()
 
 
+def processKeypress(evt):
+    key = evt.keysym
+    print(f'key: {key}')
+
+
+window.bind("<Key>", processKeypress)
+
+
 avslutt.bind("<Button-1>", handle_avslutt)
 
 # 1) Lager en brikke
@@ -61,11 +69,14 @@ intervall = 1 / fps
 while isRunning:
     if time.time() - forrige_tid >= intervall:
         forrige_tid = time.time()
+        spill.oppdater()
         
 
         
 
     # Refresh vindu
     window.update()
+
+
 
 window.mainloop()
