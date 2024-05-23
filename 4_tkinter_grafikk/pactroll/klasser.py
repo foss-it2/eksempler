@@ -14,7 +14,6 @@ class Spill(Firkant):
         self.brikker = brikker
         self.canvas = canvas
         self.troll = Troll(30,200)
-        print(self.troll.tags)
     
     def oppdater(self):
         # Slett alle ting i canvas
@@ -36,12 +35,19 @@ class Spill(Firkant):
         # 1) Tilfeldig funksjon
         pass
 
-    def handleKeys(self,evt):
-        pass
+    def handleKeys(self,key):
+        if key == "Up":
+            self.troll.endreRetning("y",-1)
+        elif key == "Right":
+            self.troll.endreRetning("x",1)
+        elif key == "Down":
+            self.troll.endreRetning("y",1)
+        elif key == "Left":
+            self.troll.endreRetning("x",-1)
         
 
 class Brikke(Firkant):
-    teller = 1
+    teller = 0
     def __init__(self, w, h, xpos, ypos) -> None:
         super().__init__(w, h, "yellow")
         self.x = xpos
@@ -49,23 +55,23 @@ class Brikke(Firkant):
         self.tekst = "M"
         self.tags = self.settId()
     
-    def tegnBrikke(self,canvas):
-        canvas.create_rectangle(
+    def tegnBrikke(self,cnv):
+        cnv.create_rectangle(
             self.x - self.w/2,
             self.y - self.h/2,
             self.x + self.w/2,
             self.y + self.h/2,
             fill=self.farge,
-            outline="black" # Viktig å ha med outline pga. default er å tegne med lys outline.
+            outline=self.farge, # Viktig å ha med outline pga. default er å tegne med lys outline.
+            tags = self.tags
         )
 
-    def slettBrikke(self,canvas):
-        canvas.delete(self.tags)
+    def slettBrikke(self,cnv):
+        cnv.delete(self.tags)
     
     def settId(self):
-        self.tags = f"id{Brikke.teller}"
-        print(self.tags)
         Brikke.teller += 1
+        return f"id{Brikke.teller}"
 
 class Troll(Brikke):
     def __init__(self, xpos, ypos) -> None:
@@ -84,8 +90,8 @@ class Troll(Brikke):
             self.vy = verdi
     
     def endrePos(self):
-        self.x += self.vx
-        self.y += self.vy
+        self.x += self.vx * 5
+        self.y += self.vy * 5
     
     def sjekkKollisjon(self,objekt):
         pass

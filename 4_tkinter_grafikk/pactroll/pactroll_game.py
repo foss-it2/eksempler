@@ -42,12 +42,14 @@ def handle_avslutt(event):
 
 
 def processKeypress(evt):
+    global spill
     key = evt.keysym
     print(f'key: {key}')
+    spill.handleKeys(key)
+    
 
 
 window.bind("<Key>", processKeypress)
-
 
 avslutt.bind("<Button-1>", handle_avslutt)
 
