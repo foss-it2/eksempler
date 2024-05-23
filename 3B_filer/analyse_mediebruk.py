@@ -1,31 +1,24 @@
 import json
 
 # Funksjon for å lese data fra JSON-filen
-
-
 def les_datafil(filnavn):
     with open(filnavn, 'r') as fil:
         data = json.load(fil)
     return data
 
 # Funksjon for å telle antall verdier i datasettet
-
-
 def tell_verdier(data):
     return len(data['value'])
 
 # Funksjon for å finne antall år med data
-
-
 def antall_aar(data):
     return len(data['dimension']['Tid']['category']['index'])
 
 # Funksjon for å finne gjennomsnittlig tid brukt på forskjellige medier
-
-
 def gjennomsnitt_tid_per_medie(data):
     medie_index = data['dimension']['Media']['category']['index']
     tid_index = data['dimension']['Tid']['category']['index']
+    
 
     resultater = {}
     for medie, idx in medie_index.items():
@@ -46,8 +39,6 @@ def gjennomsnitt_tid_per_medie(data):
     return resultater
 
 # Funksjon for å finne årlig bruk av et bestemt medie
-
-
 def aarlig_bruk_av_medie(data, medie_navn):
     medie_index = data['dimension']['Media']['category']['index']
     tid_index = data['dimension']['Tid']['category']['index']
@@ -70,12 +61,39 @@ def aarlig_bruk_av_medie(data, medie_navn):
                        ['category']['label'][tid]] = verdi
     return resultater
 
+
+def testeStruktur(data):
+    print(type(data))   # Viser at det er en dict
+    # Printer ut alle nøklene for en oversikt
+    for key in data:
+        print(key)
+    oppdeling = data["label"]
+    x_aksens_oppdelinger = data["size"]
+    print(oppdeling)
+    tidsindekser = data["dimension"]["Tid"]["category"]["index"]
+    tid = data["dimension"]["Tid"]["category"]["label"]
+    overskrifter = data["dimension"]["Media"]["category"]["label"]
+    verdier = data["value"]
+    print(overskrifter)
+    medie_index = data['dimension']['Media']['category']['index']
+    tid_index = data['dimension']['Tid']['category']['index']
+    print(medie_index)
+    print(tid_index)
+    # Ønsker å finne årlig bruk av medier etter medietype
+
+    
+
+
 # Hovedprogram
 
 
 def hovedprogram():
     filnavn = 'mediebruk_jsonified.json'  # Filnavn på JSON-datasettet
     data = les_datafil(filnavn)
+
+    testeStruktur(data)
+
+    #exit()
 
     print(f"Antall verdier i datasettet: {tell_verdier(data)}")
     print(f"Antall år med data: {antall_aar(data)}")
