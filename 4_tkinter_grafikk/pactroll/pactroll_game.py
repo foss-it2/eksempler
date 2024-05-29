@@ -60,6 +60,8 @@ avslutt.bind("<Button-1>", handle_avslutt)
 brikke1 = Brikke(30,30,50,100)
 brikke2 = Brikke(30,30,50,150)
 brikke3 = Brikke(30,30,350,100)
+brikke3.tekst="H"
+brikke3.farge = "grey"
 spill = Spill(canvas_width, canvas_height,[brikke1, brikke2, brikke3],canvas)
 
 spill.oppdater()
