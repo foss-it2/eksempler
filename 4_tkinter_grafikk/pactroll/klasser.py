@@ -39,6 +39,7 @@ class Spill(Firkant):
 
     def leggUtMat(self):
         # 1) Tilfeldig funksjon
+        # 2) Sjekk for kollisjon med brikker som allerede ligger ute.
         pass
 
     def handleKeys(self,key):
@@ -71,6 +72,8 @@ class Brikke(Firkant):
             outline=self.farge, # Viktig å ha med outline pga. default er å tegne med lys outline.
             tags = self.tags
         )
+        cnv.create_text(self.x, self.y, text=self.tekst, font=("Arial", 20), fill="black")
+
 
     def slettBrikke(self,cnv):
         cnv.delete(self.tags)
@@ -91,6 +94,7 @@ class Troll(Brikke):
         self.poeng = 0
         self.farge = "chartreuse"
         self.matkollisjoner = []
+        self.tekst = "T"
         
     def endreRetning(self,retning, verdi):
         if retning == "x":
@@ -109,16 +113,14 @@ class Troll(Brikke):
         # Sjekker kollisjon med vegger
         veggkollisjon = self.sjekkKollisjonVegg(w, h)
         if veggkollisjon == True:
-            return False
-        # Sjekke kollisjon med hindring
-        
-        # Sjekker kollisjon med mat
-        # Lager en liste med mat som trollet går gjennom. Alle nye kollisjoner sjekkes for om de allerede ligger i denne listen.
+            return False        
+        # Sjekker kollisjon med brikker. 
+        # Returneres lister med brikker eller hindringer det kollideres med.
         nye_mat_kollisjoner,hindring = self.sjekkKollisjonBrikker(brikker)
         if len(hindring) > 0:
             print("kollisjon hindring")
             return False
-        # Går gjennom matkollisjon_listen og sjekker om noen ikke er underveis i kollisjon
+        # Går gjennom matkollisjoner og sjekker om noen ikke er underveis i kollisjon
         for brikke in self.matkollisjoner:
             print(brikke)
             if brikke not in nye_mat_kollisjoner:
