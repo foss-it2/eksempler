@@ -90,6 +90,7 @@ class Troll(Brikke):
         self.vy = 0
         self.poeng = 0
         self.farge = "chartreuse"
+        self.matkollisjoner = []
         
     def endreRetning(self,retning, verdi):
         if retning == "x":
@@ -113,22 +114,21 @@ class Troll(Brikke):
         
         # Sjekker kollisjon med mat
         # Lager en liste med mat som trollet går gjennom. Alle nye kollisjoner sjekkes for om de allerede ligger i denne listen.
-        matkollisjon_liste = []
         nye_mat_kollisjoner,hindring = self.sjekkKollisjonBrikker(brikker)
         if len(hindring) > 0:
             print("kollisjon hindring")
             return False
         # Går gjennom matkollisjon_listen og sjekker om noen ikke er underveis i kollisjon
-        for brikke in matkollisjon_liste:
+        for brikke in self.matkollisjoner:
             print(brikke)
             if brikke not in nye_mat_kollisjoner:
                 # Gjør om til hindring
                 print("gjør om til hindring")
                 brikke.tekst = "H"
                 brikke.farge = "grey"
-                matkollisjon_liste.remove(brikke)
-        # Legg til nye brikker i matkollisjon_liste
-        matkollisjon_liste = matkollisjon_liste + nye_mat_kollisjoner
+                self.matkollisjoner.remove(brikke)
+        # Legg til nye brikker i matkollisjoner
+        self.matkollisjoner += nye_mat_kollisjoner
         # Dersom ikke noe annet gjør at vi skal stoppe spillet
         return True
     
