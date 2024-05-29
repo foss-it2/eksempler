@@ -15,21 +15,27 @@ class Spill(Firkant):
         self.canvas = canvas
         self.troll = Troll(30,200)
     
-    def oppdater(self):
-        # Slett alle ting i canvas
-        for brikke in self.brikker:
-            brikke.slettBrikke(self.canvas)
-        self.troll.slettBrikke(self.canvas)
-        
+    def oppdater(self):        
         # Utføre flytting
         self.troll.endrePos()
 
         # Sjekk kollisjon
+        fortsett = self.troll.sjekkKollisjon(self.w, self.h)  # Returnerer False hvis den kolliderer med vegg eller hindring.
+        if fortsett == False:
+            # Hvis troll kolliderer med noe den ikke skal stanses spillet.
+            return False
+
+        # Slett alle ting i canvas
+        for brikke in self.brikker:
+            brikke.slettBrikke(self.canvas)
+        self.troll.slettBrikke(self.canvas)
 
         # Tegne på nytt
         for brikke in self.brikker:
             brikke.tegnBrikke(self.canvas)
         self.troll.tegnBrikke(self.canvas)
+
+        return True
 
     def leggUtMat(self):
         # 1) Tilfeldig funksjon
@@ -93,5 +99,30 @@ class Troll(Brikke):
         self.x += self.vx * 5
         self.y += self.vy * 5
     
-    def sjekkKollisjon(self,objekt):
-        pass
+    def sjekkKollisjon(self, w, h):
+        # Returnerer False hvis kollisjon med vegg eller hindring, ellers True.
+        # Sjekker kollisjon med vegger
+        veggkollisjon = self.sjekkKollisjonVegg(w, h)
+        if veggkollisjon == True:
+            return False
+        # Sjekke kollisjon med hindring
+        # Sjekker kollisjon med mat
+
+        return True
+    
+    def sjekkKollisjonVegg(self,w, h):
+        if self.x + self.w/2 > w:
+            # Setter ny posisjon rett inntil vegg
+            self.x = w - self.w/h
+            print("kollisjon ")
+            return True
+        elif self.x - self.w/2 < 0:
+            self.x = self.w/2
+            return True
+        elif self.y - self.h/2 < 0:
+            self.y = self.h/2
+            return True
+        elif self.y + self.h/2 > h:
+            self.y = h - self.h/2
+            return True
+        return False

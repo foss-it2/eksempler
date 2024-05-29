@@ -57,8 +57,10 @@ avslutt.bind("<Button-1>", handle_avslutt)
 # 2) Lage spill, fylles med brikke(r)
 # 3) Animere
 
-brikke = Brikke(40,40,50,100)
-spill = Spill(canvas_width, canvas_height,[brikke],canvas)
+brikke1 = Brikke(30,30,50,100)
+brikke2 = Brikke(30,30,50,150)
+brikke3 = Brikke(30,30,350,100)
+spill = Spill(canvas_width, canvas_height,[brikke1, brikke2, brikke3],canvas)
 
 spill.oppdater()
 
@@ -71,7 +73,7 @@ intervall = 1 / fps
 while isRunning:
     if time.time() - forrige_tid >= intervall:
         forrige_tid = time.time()
-        spill.oppdater()
+        isRunning = spill.oppdater()
         
 
         
