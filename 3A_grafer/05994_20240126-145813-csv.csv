@@ -1,0 +1,78 @@
+"05994: Tid brukt til ulike aktiviteter en gjennomsnittsdag blant alle (timer og minutter), etter alle aktiviteter, kjønn, statistikkvariabel, år og alder"
+
+"alle aktiviteter";"kjønn";"Tidsbruk 2000 I alt"
+"I alt";"Alle";24.00
+"I alt";"Menn";24.00
+"I alt";"Kvinner";24.00
+"Inntektsgivende arbeid, arbeidsreiser mv.";"Alle";3.47
+"Inntektsgivende arbeid, arbeidsreiser mv.";"Menn";4.34
+"Inntektsgivende arbeid, arbeidsreiser mv.";"Kvinner";2.59
+"¬ Inntektsgivende arbeid";"Alle";3.25
+"¬ Inntektsgivende arbeid";"Menn";4.09
+"¬ Inntektsgivende arbeid";"Kvinner";2.41
+"¬ Arbeidsreiser";"Alle";0.22
+"¬ Arbeidsreiser";"Menn";0.25
+"¬ Arbeidsreiser";"Kvinner";0.18
+"Husholdsarbeid i alt";"Alle";3.18
+"Husholdsarbeid i alt";"Menn";2.41
+"Husholdsarbeid i alt";"Kvinner";3.56
+"¬ Husarbeid";"Alle";1.25
+"¬ Husarbeid";"Menn";0.51
+"¬ Husarbeid";"Kvinner";1.59
+"¬ Vedlikeholdsarbeid";"Alle";0.27
+"¬ Vedlikeholdsarbeid";"Menn";0.36
+"¬ Vedlikeholdsarbeid";"Kvinner";0.17
+"¬ Omsorgsarbeid";"Alle";0.33
+"¬ Omsorgsarbeid";"Menn";0.24
+"¬ Omsorgsarbeid";"Kvinner";0.42
+"¬ Kjøp av varer og tjenester";"Alle";0.24
+"¬ Kjøp av varer og tjenester";"Menn";0.21
+"¬ Kjøp av varer og tjenester";"Kvinner";0.26
+"¬ Annet husholdsarbeid";"Alle";0.12
+"¬ Annet husholdsarbeid";"Menn";0.11
+"¬ Annet husholdsarbeid";"Kvinner";0.13
+"¬ Reiser i samband med husholdsarbeid";"Alle";0.19
+"¬ Reiser i samband med husholdsarbeid";"Menn";0.19
+"¬ Reiser i samband med husholdsarbeid";"Kvinner";0.19
+"Utdanning i alt";"Alle";0.25
+"Utdanning i alt";"Menn";0.22
+"Utdanning i alt";"Kvinner";0.27
+"Personlig behov i alt";"Alle";9.58
+"Personlig behov i alt";"Menn";9.46
+"Personlig behov i alt";"Kvinner";10.11
+"¬ Nattesøvn";"Alle";7.57
+"¬ Nattesøvn";"Menn";7.50
+"¬ Nattesøvn";"Kvinner";8.04
+"¬ Annen personlig pleie";"Alle";0.59
+"¬ Annen personlig pleie";"Menn";0.54
+"¬ Annen personlig pleie";"Kvinner";1.04
+"¬ Måltider";"Alle";1.03
+"¬ Måltider";"Menn";1.03
+"¬ Måltider";"Kvinner";1.04
+"Fritid i alt";"Alle";6.24
+"Fritid i alt";"Menn";6.28
+"Fritid i alt";"Kvinner";6.20
+"¬ Idrett og friluftsliv";"Alle";0.31
+"¬ Idrett og friluftsliv";"Menn";0.34
+"¬ Idrett og friluftsliv";"Kvinner";0.28
+"¬ Underholdning og kulturbruk";"Alle";0.14
+"¬ Underholdning og kulturbruk";"Menn";0.14
+"¬ Underholdning og kulturbruk";"Kvinner";0.14
+"¬ Sosialt samvær";"Alle";1.45
+"¬ Sosialt samvær";"Menn";1.32
+"¬ Sosialt samvær";"Kvinner";1.57
+"¬ Lesing";"Alle";0.35
+"¬ Lesing";"Menn";0.32
+"¬ Lesing";"Kvinner";0.39
+"¬ Fjernsynsseing";"Alle";1.48
+"¬ Fjernsynsseing";"Menn";2.01
+"¬ Fjernsynsseing";"Kvinner";1.35
+"¬ Annen fritid i alt";"Alle";0.57
+"¬ Annen fritid i alt";"Menn";1.00
+"¬ Annen fritid i alt";"Kvinner";0.55
+"¬ Reiser i samband med fritid";"Alle";0.34
+"¬ Reiser i samband med fritid";"Menn";0.35
+"¬ Reiser i samband med fritid";"Kvinner";0.32
+"Annet, uoppgitt";"Alle";0.08
+"Annet, uoppgitt";"Menn";0.08
+"Annet, uoppgitt";"Kvinner";0.07
