@@ -64,11 +64,11 @@
             for(i=0; i<arr.length; i++) {
                 let varselTid = arr[i][1];
                 varselTid = varselTid.substring(0,2);
-                varselTid = Number(varselTid);
-                //c("varselTid: " + varselTid);
+                varselTid = Number(varselTid) + 1;  // Legger til 1 pga. UTC-tid i værvarselet.
+                c("varselTid: " + varselTid);
                 if(varselTid == tid) {
                     tidsIndeks = i+1;   // Vi trenger ikke å sjekke om tiden går over midnatt pga. vi henter værvarsel for flere dager frem ;)
-                    continue;   // Hopper ut av loopen.
+                    break;   // Hopper ut av loopen.
                 }
             }
             let varsel = "Værvarsel klokken ";
