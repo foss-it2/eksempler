@@ -16,12 +16,11 @@ headers = {
 result = requests.get(url, headers=headers, timeout=5)
 print(f"status code: {result.status_code}")
 print(result.headers)
-#header_pent = json.dumps(result.headers,ensure_ascii=False, indent=4)
-#print(header_pent)
+#for key,value in result.headers.items():
+#    print(key,value)
 
 #print(result.text)
 
-#
 
 data = json.loads(result.text)
 
@@ -34,6 +33,7 @@ pretty_data = json.dumps(data,ensure_ascii=False,indent=4)
  #   fil.write(pretty_data)
 
 print(pretty_data[:2000])
+
 
 
 
@@ -75,6 +75,7 @@ for linje in data_varsel:
         print(tid)
         neste_time = linje
         neste_tid = tid
+        break
 varsel = neste_time["data"]["instant"]["details"]
 trykk = varsel["air_pressure_at_sea_level"]
 temperatur = varsel["air_temperature"]
