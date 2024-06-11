@@ -9,14 +9,19 @@ def tidsObjektFraString(tidsstreng):
 
 
 # result = requests.get('http://mauroy.no/temperatur/getData_json.php', timeout=5)
-url = 'http://api.met.no/weatherapi/locationforecast/2.0/compact.json?lat=-37.866069&lon=144.973337'
+url = 'http://api.met.no/weatherapi/locationforecast/2.0/compact.json?lat=59.942&lon=10.720'
 # Må lure APIet til å tro det er en nettleser som kontakter den.
 headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
 result = requests.get(url, headers=headers, timeout=5)
 print(f"status code: {result.status_code}")
+print(result.headers)
+#header_pent = json.dumps(result.headers,ensure_ascii=False, indent=4)
+#print(header_pent)
+
 #print(result.text)
 
+#
 
 data = json.loads(result.text)
 
