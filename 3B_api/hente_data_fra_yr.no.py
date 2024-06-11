@@ -1,9 +1,40 @@
+"""
+Enkelt program som henter værvarsel fra yr.no sitt API.
+Vindretninger leses slik med klokka fra Nord som er "kl. 12":
+0° — north wind (N)
+22.5° — north-northeast wind (NNE)
+45° — northeast wind (NE)
+67.5° — east-northeast wind (ENE)
+90°— east wind (E)
+112.5° — east-southeast wind (ESE)
+135° — southeast wind (SE)
+157.5° — south-southeast wind (SSE)
+180° — south wind (S)
+202.5° — south-southwest wind (SSW)
+225° — southwest wind (SW)
+247.5° — west-southwest wind (WSW)
+270° — west wind (W)
+292.5° — west-northwest wind (WNW)
+315° — northwest wind (NW)
+337.5° — north-northwest wind (NNW)
+360° — north wind (N)
+
+
+"""
+
+
 import requests
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
+
 
 
 def tidsObjektFraString(tidsstreng):
+    """
+    Lager et tidsobjekt med tiden formattert på ISO 8601 standarden.
+    T indikerer tids-delen
+    Z indikerer at tiden er på UTC-format. Dvs. tiden for tidssone 0.
+    """
     date_format = '%Y-%m-%dT%H:%M:%SZ'
     return datetime.strptime(tidsstreng, date_format)
 
@@ -53,14 +84,15 @@ print(last_update)
 # Må fortelle datetime hva slags format tiden ligger på
 date_format = '%Y-%m-%dT%H:%M:%SZ'
 last_update = tidsObjektFraString(last_update)
+last_update = last_update + timedelta(hours=1)  # Justerer én time frem pga UTC.
 print(f"{last_update.day}/{last_update.month}-{last_update.year}")
 
 data_varsel = data["properties"]["timeseries"]
 
-print(type(data_varsel))
+#print(type(data_varsel))
 
 time_now = datetime.now()
-# Leter i værvarselet for tiden som er nærmest tiden akkurat nå. Ser på antall dager og sekunder i tidsdifferanse.
+# Leter i værvarselet for tiden som er nærmest tiden akkurat nå + 1 time. Ser på antall dager og sekunder i tidsdifferanse.
 # Plukker deretter ut det værvarselet.
 
 neste_time = {}
@@ -70,9 +102,10 @@ for linje in data_varsel:
     #print(linje)
     tid_str = linje["time"]
     tid = tidsObjektFraString(tid_str)
+    # Tiden vi leter etter ligger én time frem pga UTC-tid (Må egentlig passe på sommer/vintertid også).
+    tid = tid + timedelta(hours=1)
     tidsdiff = tid - time_now
     if tidsdiff.days == 0 and tidsdiff.seconds < 3600:
-        print(tid)
         neste_time = linje
         neste_tid = tid
         break
