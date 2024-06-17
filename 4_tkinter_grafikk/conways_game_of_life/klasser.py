@@ -2,10 +2,12 @@
 Klasser for simuleringen Conways game of life
 """
 
+from random import choice
+
 class Celle:
     def __init__(self,id,x,y,width=5,outline="black",fill="chartreuse") -> None:
         self.w = width
-        self.levende = True
+        self.levende = choice([True,False,False]) # 1/3 sjanse for å være levende.
         self.outline = outline
         self.fill = fill
         self.x = x
@@ -14,7 +16,7 @@ class Celle:
     
     def tegn(self,cnv):
         if self.levende == False:
-            self.fill = "grey"
+            self.fill = "black"
         else:
             self.fill = "chartreuse"
         cnv.create_rectangle(
