@@ -7,7 +7,7 @@ window = tk.Tk()
 frame1 = tk.Frame(window)
 frame1.pack()
 windowWidth = 700
-windowHeight = 800
+windowHeight = 700
 canvas_height = 600
 canvas_width = windowWidth
 window.minsize(windowWidth, windowHeight)    # Setter størrelsen.
@@ -42,7 +42,6 @@ def handle_avslutt(event):
 def handle_klikk(event):
     x = event.x
     y = event.y
-    print(x,y)
     for celle in cells:
         id = celle.isPressed(x,y)
         if id:
@@ -62,11 +61,14 @@ def tengAlleCeller(event):
 # 2) Legge inn trykkefunksjonalitet
 # 3) Animere ved å oppdatere celletilstandene
 
-cell1 = Celle(200,200,50)
-cell2 = Celle(250,200,50)
+cells = []
+BREDDE = 22
+HOYDE = 22
+W = 25
 
-
-cells = [cell1,cell2]
+for i in range(1,HOYDE):
+    for j in range(1,BREDDE):
+        cells.append(Celle(f"id{i},{j}",j*W,i*W,W))
 
 tengAlleCeller(canvas)
 

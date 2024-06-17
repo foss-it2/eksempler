@@ -3,15 +3,14 @@ Klasser for simuleringen Conways game of life
 """
 
 class Celle:
-    teller = 0
-    def __init__(self,x,y,width=5,outline="black",fill="chartreuse") -> None:
+    def __init__(self,id,x,y,width=5,outline="black",fill="chartreuse") -> None:
         self.w = width
         self.levende = True
         self.outline = outline
         self.fill = fill
         self.x = x
         self.y = y
-        self.id = self.settId()
+        self.id = id
     
     def tegn(self,cnv):
         if self.levende == False:
@@ -29,10 +28,6 @@ class Celle:
             tags = "celle"
         )
     
-    
-    def settId(self):
-        Celle.teller += 1
-        return f"id{Celle.teller}"
 
     def isPressed(self, x, y):
         # Trekker fra bredden til outline så man ikke kan klikke mellom to celler.
