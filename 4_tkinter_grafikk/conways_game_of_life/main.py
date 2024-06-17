@@ -54,12 +54,213 @@ window.bind("<Button-1>", handle_klikk)
 
 def tengAlleCeller(event):
     canvas.delete("celle")
-    for celle in cells:
-        celle.tegn(canvas)
+    for rad in cells:
+        for celle in rad:
+            celle.tegn(canvas)
 
 def fjernAlleCeller():
     """Sletter alle celler"""
     canvas.delete("celle")
+
+
+def oppdater():
+    for i in range(HOYDE):
+        for j in range(BREDDE):
+            celle = cells[i][j]
+            # Sjekk naboer
+            levende = 0
+            dode = 0
+            print(f"{i},{j}")
+            if i == 0:
+                if j == 0: # Øvre venstre hjørne
+                    if cells[i][j+1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i+1][j].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i+1][j+1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                elif j == BREDDE-1: # Øvre høyre hjørne
+                    if cells[i][j-1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i+1][j].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i+1][j-1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                else: # Øvre rad mellom endene.
+                    if cells[i][j+1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i+1][j+1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i+1][j].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i+1][j-1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i][j-1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+            elif i == HOYDE-1:
+                if j == 0: # Nedre venstre hjørne
+                    if cells[i][j+1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i-1][j+1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i-1][j].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                elif j == BREDDE-1: # Nedre høyre hjørne
+                    if cells[i][j-1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i-1][j-1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i-1][j].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                else: # Nedre rad mellom endene.
+                    if cells[i][j+1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i-1][j+1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i-1][j].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i-1][j-1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i][j-1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+            else:
+                if j == 0: # Venstre kant
+                    if cells[i-1][j].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i-1][j+1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i][j+1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i+1][j+1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i+1][j].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                elif j == BREDDE-1: # Høyre kant
+                    if cells[i-1][j].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i-1][j-1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i][j-1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i+1][j-1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i+1][j].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                else: # Alle andre celler med 8 naboer
+                    if cells[i-1][j-1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i-1][j].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i-1][j+1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i][j+1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i+1][j+1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i+1][j].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i+1][j-1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                    if cells[i][j-1].levende:
+                        levende += 1
+                    else:
+                        dode += 1
+                
+            
+            # Sjekk de fire reglene for hva som skjer i neste iterasjon.
+            if celle.levende:
+                if levende < 2:
+                    celle.nesteTilstand = False
+                elif levende == 2 or levende == 3:
+                    celle.nesteTilstand = True
+                elif levende > 3:
+                    celle.nesteTilstand = False
+            else:
+                if levende == 3:
+                    celle.nesteTilstand = True
+            
+        
+        
+            
+    
 
 # 1) Lager rutenett med brikker
 # 2) Legge inn trykkefunksjonalitet
@@ -71,11 +272,12 @@ HOYDE = 22
 W = 25
 
 # Lager brettet med celler.
-for i in range(1,HOYDE):
-    for j in range(1,BREDDE):
-        cells.append(Celle(f"id{i},{j}",j*W,i*W,W))
+for i in range(HOYDE):
+    cells.append([])
+    for j in range(BREDDE):
+        cells[i].append(Celle(f"{i},{j}",(j+1)*W,(i+1)*W,W))
 
-tengAlleCeller(1)
+tengAlleCeller(True)
 
 
 
@@ -83,13 +285,14 @@ tengAlleCeller(1)
 start_tid = time.time()
 forrige_tid = time.time()
 isRunning = True
-fps = 30
+fps = 1
 intervall = 1 / fps
 while isRunning:
-    if time.time() - forrige_tid >= 100*intervall:
+    if time.time() - forrige_tid >= intervall:
         forrige_tid = time.time()
         fjernAlleCeller()
-        #tengAlleCeller(1)
+        oppdater()
+        tengAlleCeller(True)
 
     # Refresh vindu
     window.update()
