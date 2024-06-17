@@ -74,7 +74,7 @@ startSimulering.bind("<Button-1>", handle_start)
 drepCeller.bind("<Button-1>", handle_drep_celler)
 nyttBrett.bind("<Button-1>", handle_nytt_brett)
 avslutt.bind("<Button-1>", handle_avslutt)
-window.bind("<Button-1>", handle_klikk)
+canvas.bind("<Button-1>", handle_klikk)
 
 
 def tegnAlleCeller():
@@ -118,9 +118,9 @@ def genererNyttBrett():
 # 3) Animere ved å oppdatere celletilstandene
 
 cells = []
-BREDDE = 22
-HOYDE = 22
-W = 25
+BREDDE = 68
+HOYDE = 57
+W = 10
 
 # Lager brettet med celler.
 for i in range(HOYDE):
