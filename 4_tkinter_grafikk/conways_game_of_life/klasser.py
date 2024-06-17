@@ -7,8 +7,8 @@ from random import choice
 class Celle:
     def __init__(self,id,x,y,width=5,outline="black",fill="chartreuse") -> None:
         self.w = width
-        self.levende = choice([True,False,False]) # 1/3 sjanse for å være levende.
-        self.nesteTilstand = False
+        self.levende = self.setLevende()
+        self.nesteTilstand = self.levende
         self.outline = outline
         self.fill = fill
         self.x = x
@@ -32,6 +32,8 @@ class Celle:
             tags = self.id
         )
     
+    def setLevende(self):
+        return choice([True, False, False])  # 1/3 sjanse for å være levende.
 
     def isPressed(self, x, y):
         # Trekker fra bredden til outline så man ikke kan klikke mellom to celler.
@@ -244,4 +246,4 @@ class Conways:
                 else:
                     if levende == 3:
                         celle.nesteTilstand = True
-                print(f"{celle.id}: {celle.levende} -> {celle.nesteTilstand}")
+                #print(f"{celle.id}: {celle.levende} -> {celle.nesteTilstand}")

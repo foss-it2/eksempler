@@ -32,6 +32,10 @@ footer = tk.Frame(window)
 footer.pack()
 startSimulering = tk.Button(footer, text="Start simulering")
 startSimulering.pack()
+drepCeller = tk.Button(footer, text="Drep alle celler")
+drepCeller.pack()
+nyttBrett = tk.Button(footer, text="Nytt brett")
+nyttBrett.pack()
 avslutt = tk.Button(footer, text="Avslutt")
 avslutt.pack()
 
@@ -41,6 +45,12 @@ def handle_start(event):
         isSimulating = False
     else:
         isSimulating = True
+
+def handle_drep_celler(event):
+    drepAlleCeller()
+
+def handle_nytt_brett(event):
+    genererNyttBrett()
 
 
 def handle_avslutt(event):
@@ -61,10 +71,13 @@ def handle_klikk(event):
             
 
 startSimulering.bind("<Button-1>", handle_start)
+drepCeller.bind("<Button-1>", handle_drep_celler)
+nyttBrett.bind("<Button-1>", handle_nytt_brett)
 avslutt.bind("<Button-1>", handle_avslutt)
 window.bind("<Button-1>", handle_klikk)
 
-def tengAlleCeller():
+
+def tegnAlleCeller():
     canvas.delete("celle")
     for rad in cells:
         for celle in rad:
@@ -85,9 +98,19 @@ def drepAlleCeller():
         for j in range(BREDDE):
             celle = cells[i][j]
             celle.levende = False
+            celle.nesteTilstand = False
             canvas.delete(celle.id)
             
+
+def genererNyttBrett():
+    for i in range(HOYDE):
+        for j in range(BREDDE):
+            celle = cells[i][j]
+            celle.levende = celle.setLevende()
+            celle.nesteTilstand = celle.levende
+    tegnAlleCeller()
         
+
 
 
 # 1) Lager rutenett med brikker
@@ -107,16 +130,15 @@ for i in range(HOYDE):
 
 game = Conways(cells,HOYDE,BREDDE)
 
-#tengAlleCeller(True)
-drepAlleCeller()
-tengAlleCeller()
+tegnAlleCeller()
+#drepAlleCeller()
 
 # Her animinerer vi
 start_tid = time.time()
 forrige_tid = time.time()
 isRunning = True
 isSimulating = False
-fps = 1
+fps = 10
 intervall = 1 / fps
 while isRunning:
     if time.time() - forrige_tid >= intervall:
@@ -124,7 +146,7 @@ while isRunning:
         if isSimulating:
             fjernAlleCeller()
             game.oppdater()
-            tengAlleCeller()
+            tegnAlleCeller()
 
     # Refresh vindu
     window.update()
