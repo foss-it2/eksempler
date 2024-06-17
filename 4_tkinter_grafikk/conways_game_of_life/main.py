@@ -57,6 +57,10 @@ def tengAlleCeller(event):
     for celle in cells:
         celle.tegn(canvas)
 
+def fjernAlleCeller():
+    """Sletter alle celler"""
+    canvas.delete("celle")
+
 # 1) Lager rutenett med brikker
 # 2) Legge inn trykkefunksjonalitet
 # 3) Animere ved å oppdatere celletilstandene
@@ -66,11 +70,12 @@ BREDDE = 22
 HOYDE = 22
 W = 25
 
+# Lager brettet med celler.
 for i in range(1,HOYDE):
     for j in range(1,BREDDE):
         cells.append(Celle(f"id{i},{j}",j*W,i*W,W))
 
-tengAlleCeller(canvas)
+tengAlleCeller(1)
 
 
 
@@ -81,8 +86,10 @@ isRunning = True
 fps = 30
 intervall = 1 / fps
 while isRunning:
-    if time.time() - forrige_tid >= intervall:
+    if time.time() - forrige_tid >= 100*intervall:
         forrige_tid = time.time()
+        fjernAlleCeller()
+        #tengAlleCeller(1)
 
     # Refresh vindu
     window.update()
