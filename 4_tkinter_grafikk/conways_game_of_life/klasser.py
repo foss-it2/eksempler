@@ -5,7 +5,7 @@ Klasser for simuleringen Conways game of life
 from random import choice
 
 class Celle:
-    def __init__(self,id,x,y,width=5,outline="black",fill="chartreuse") -> None:
+    def __init__(self,id,x,y,width=5,outline="black",fill="black") -> None:
         self.w = width
         self.levende = self.setLevende()
         self.nesteTilstand = self.levende
@@ -18,9 +18,9 @@ class Celle:
     def tegn(self,cnv):
         self.levende = self.nesteTilstand
         if self.levende == False:
-            self.fill = "black"
+            self.fill = "white"
         else:
-            self.fill = "chartreuse"
+            self.fill = "black"
         cnv.create_rectangle(
             self.x - self.w/2,
             self.y - self.w/2,

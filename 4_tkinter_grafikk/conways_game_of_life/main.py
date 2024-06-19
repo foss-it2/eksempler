@@ -23,7 +23,7 @@ canvas_frame = tk.Frame(window)
 canvas_frame.pack()
 
 canvas = tk.Canvas(canvas_frame, width=canvas_width,
-                   height=canvas_height, background="black")
+                   height=canvas_height, background="white")
 canvas.pack()
 
 
@@ -118,9 +118,9 @@ def genererNyttBrett():
 # 3) Animere ved å oppdatere celletilstandene
 
 cells = []
-BREDDE = 68
-HOYDE = 57
-W = 10
+BREDDE = 22
+HOYDE = 22
+W = 25
 
 # Lager brettet med celler.
 for i in range(HOYDE):
