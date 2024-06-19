@@ -78,7 +78,6 @@ canvas.bind("<Button-1>", handle_klikk)
 
 
 def tegnAlleCeller():
-    canvas.delete("celle")
     for rad in cells:
         for celle in rad:
             celle.tegn(canvas)
@@ -100,6 +99,7 @@ def drepAlleCeller():
             celle.levende = False
             celle.nesteTilstand = False
             canvas.delete(celle.id)
+    tegnAlleCeller()
             
 
 def genererNyttBrett():
@@ -109,9 +109,30 @@ def genererNyttBrett():
             celle.levende = celle.setLevende()
             celle.nesteTilstand = celle.levende
     tegnAlleCeller()
-        
 
-
+def oppdater():
+    print("hei")
+    for i in range(HOYDE):
+        for j in range(BREDDE):
+            celle = cells[i][j]
+            # Sjekk naboer
+            levende = 0
+            naboer = celle.getNaboer(cells)
+            for n in naboer:
+                if n.levende:
+                    levende+=1
+            # Sjekk de fire reglene for hva som skjer i neste iterasjon.
+            if celle.levende:
+                if levende < 2:
+                    celle.nesteTilstand = False
+                elif levende == 2 or levende == 3:
+                    celle.nesteTilstand = True
+                elif levende > 3:
+                    celle.nesteTilstand = False
+            else:
+                if levende == 3:
+                    celle.nesteTilstand = True
+            #print(f"{celle.id}: {celle.levende} -> {celle.nesteTilstand}")
 
 # 1) Lager rutenett med brikker
 # 2) Legge inn trykkefunksjonalitet
@@ -126,12 +147,35 @@ W = 25
 for i in range(HOYDE):
     cells.append([])
     for j in range(BREDDE):
-        cells[i].append(Celle(f"{i},{j}",(j+1)*W,(i+1)*W,W))
+        if i == 0:
+            if j == 0: # Øvre venstre hjørne
+                cells[i].append(TL(i,j,(j+1)*W,(i+1)*W,W))
+            elif j == BREDDE-1: # Øvre høyre hjørne
+                cells[i].append(TR(i,j,(j+1)*W,(i+1)*W,W))
+            else:   # Nedre rad
+                cells[i].append(TopRow(i,j,(j+1)*W,(i+1)*W,W))
+        elif i == HOYDE-1:
+            if j == 0: # Nedre venstre hjørne
+                cells[i].append(BL(i,j,(j+1)*W,(i+1)*W,W))
+            elif j == BREDDE-1: # Nedre høyre hjørne
+                cells[i].append(BR(i,j,(j+1)*W,(i+1)*W,W))
+            else:   # Nedre rad
+                cells[i].append(BottomRow(i,j,(j+1)*W,(i+1)*W,W))
+        else:
+            if j == 0:  # Venstre kant
+                cells[i].append(LeftEdge(i,j,(j+1)*W,(i+1)*W,W))
+            elif j == BREDDE-1:  # Høyre kant
+                cells[i].append(RightEdge(i,j,(j+1)*W,(i+1)*W,W))
+            else:
+                cells[i].append(Celle(i,j,(j+1)*W,(i+1)*W,W))
+
 
 game = Conways(cells,HOYDE,BREDDE)
 
 tegnAlleCeller()
 #drepAlleCeller()
+
+
 
 # Her animinerer vi
 start_tid = time.time()
@@ -145,7 +189,7 @@ while isRunning:
         forrige_tid = time.time()
         if isSimulating:
             fjernAlleCeller()
-            game.oppdater()
+            oppdater()
             tegnAlleCeller()
 
     # Refresh vindu

@@ -5,7 +5,7 @@ Klasser for simuleringen Conways game of life
 from random import choice
 
 class Celle:
-    def __init__(self,id,x,y,width=5,outline="black",fill="black") -> None:
+    def __init__(self,i,j,x,y,width=5,outline="black",fill="black") -> None:
         self.w = width
         self.levende = self.setLevende()
         self.nesteTilstand = self.levende
@@ -13,7 +13,9 @@ class Celle:
         self.fill = fill
         self.x = x
         self.y = y
-        self.id = id
+        self.i = i
+        self.j = j
+        self.id = f"{i},{j}"
     
     def tegn(self,cnv):
         self.levende = self.nesteTilstand
@@ -45,6 +47,98 @@ class Celle:
             return self.id
         else:
             return False
+    
+    def getNaboer(self,cells):
+        i = self.i
+        j = self.j
+        return cells[i-1][j-1], cells[i-1][j], cells[i-1][j+1], \
+            cells[i][j+1], cells[i+1][j+1], cells[i+1][j], \
+            cells[i+1][j-1], cells[i][j-1]
+
+class TL(Celle):
+    """Top Left"""
+    def __init__(self, id, x, y, width=5, outline="black", fill="black") -> None:
+        super().__init__(id, x, y, width, outline, fill)
+    
+    def getNaboer(self,cells):
+        i = self.i
+        j = self.j
+        return cells[i][j+1], cells[i+1][j+1], cells[i+1][j]
+
+class TR(Celle):
+    """Top Right"""
+    def __init__(self, id, x, y, width=5, outline="black", fill="black") -> None:
+        super().__init__(id, x, y, width, outline, fill)
+    
+    def getNaboer(self,cells):
+        i = self.i
+        j = self.j
+        return cells[i][j-1], cells[i+1][j-1], cells[i+1][j]
+
+class BL(Celle):
+    """Bottom Left"""
+    def __init__(self, id, x, y, width=5, outline="black", fill="black") -> None:
+        super().__init__(id, x, y, width, outline, fill)
+    
+    def getNaboer(self,cells):
+        i = self.i
+        j = self.j
+        return cells[i][j+1], cells[i-1][j+1], cells[i-1][j]
+
+class BR(Celle):
+    """Bottom Right"""
+    def __init__(self, id, x, y, width=5, outline="black", fill="black") -> None:
+        super().__init__(id, x, y, width, outline, fill)
+    
+    def getNaboer(self,cells):
+        i = self.i
+        j = self.j
+        return cells[i][j-1], cells[i-1][j-1], cells[i-1][j]
+
+class TopRow(Celle):
+    """Top Row"""
+    def __init__(self, id, x, y, width=5, outline="black", fill="black") -> None:
+        super().__init__(id, x, y, width, outline, fill)
+    
+    def getNaboer(self,cells):
+        i = self.i
+        j = self.j
+        return cells[i][j-1], cells[i+1][j-1], cells[i+1][j], \
+            cells[i+1][j+1], cells[i][j+1]
+
+class BottomRow(Celle):
+    """Bottom Row"""
+    def __init__(self, id, x, y, width=5, outline="black", fill="black") -> None:
+        super().__init__(id, x, y, width, outline, fill)
+    
+    def getNaboer(self,cells):
+        i = self.i
+        j = self.j
+        return cells[i][j-1], cells[i-1][j-1], cells[i-1][j], \
+            cells[i-1][j+1], cells[i][j+1]
+
+class LeftEdge(Celle):
+    """Left Edge"""
+    def __init__(self, id, x, y, width=5, outline="black", fill="black") -> None:
+        super().__init__(id, x, y, width, outline, fill)
+    
+    def getNaboer(self,cells):
+        i = self.i
+        j = self.j
+        return cells[i-1][j], cells[i-1][j+1], cells[i][j+1], \
+            cells[i+1][j+1], cells[i+1][j]
+
+class RightEdge(Celle):
+    """Right Edge"""
+    def __init__(self, id, x, y, width=5, outline="black", fill="black") -> None:
+        super().__init__(id, x, y, width, outline, fill)
+    
+    def getNaboer(self,cells):
+        i = self.i
+        j = self.j
+        return cells[i-1][j], cells[i-1][j-1], cells[i][j-1], \
+            cells[i+1][j-1], cells[i+1][j]
+
 
 class Conways:
     def __init__(self,cells,hoyde,bredde) -> None:
