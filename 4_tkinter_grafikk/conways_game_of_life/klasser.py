@@ -16,6 +16,7 @@ class Celle:
         self.i = i
         self.j = j
         self.id = f"{i},{j}"
+        self.rect = None
     
     def tegn(self,cnv):
         self.levende = self.nesteTilstand
@@ -23,7 +24,7 @@ class Celle:
             self.fill = "white"
         else:
             self.fill = "black"
-        cnv.create_rectangle(
+        self.rect = cnv.create_rectangle(
             self.x - self.w/2,
             self.y - self.w/2,
             self.x + self.w/2,
@@ -33,6 +34,14 @@ class Celle:
             width=1,
             tags = self.id
         )
+    
+    def oppdaterFarge(self,cnv):
+        self.levende = self.nesteTilstand
+        if self.levende == False:
+            self.fill = "white"
+        else:
+            self.fill = "black"
+        cnv.itemconfig(self.rect, fill=self.fill)
     
     def setLevende(self):
         return choice([True, False, False])  # 1/3 sjanse for å være levende.

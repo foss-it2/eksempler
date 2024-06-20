@@ -9,9 +9,9 @@ import pygame as pg
 from   pygame.locals import K_c, K_f, K_g  # Clear / Freeze / Go
 
 # Konstanter:
-CD = 20  # Cellenes dimensjon (antall piksler hver vei i kvadratet).
-CR = 26  # Nettets  dimensjon (antall rader - i høyden
-CK = 26  #                      og kolonner - i bredden).
+CD = 5  # Cellenes dimensjon (antall piksler hver vei i kvadratet).
+CR = 100  # Nettets  dimensjon (antall rader - i høyden
+CK = 100  #                      og kolonner - i bredden).
 WH = CD * CR  # Vinduets dimensjon (antall piksler i høyden og
 WW = CD * CK  #                     antall piksler i bredden).
 
@@ -118,7 +118,7 @@ simulate = True
 while fortsett:
     if simulate:
         tegnAlleCeller()
-        time.sleep(2)
+        time.sleep(0.1)
         oppdaterCelleLiv()
 
     # Sjekk innkomne hendelser:

@@ -82,6 +82,11 @@ def tegnAlleCeller():
         for celle in rad:
             celle.tegn(canvas)
 
+def oppdaterAlleCeller():
+    for rad in cells:
+        for celle in rad:
+            celle.oppdaterFarge(canvas)
+
 def fjernAlleCeller():
     """Sletter alle celler"""
     global canvas
@@ -135,9 +140,9 @@ def oppdater():
 # 3) Animere ved å oppdatere celletilstandene
 
 cells = []
-BREDDE = 22
-HOYDE = 22
-W = 25
+BREDDE = 100
+HOYDE = 100
+W = 5
 
 # Lager brettet med celler.
 # Sjekker hva slags celle det er snakk om og setter korrekt klasse på cellen.
@@ -183,9 +188,10 @@ while isRunning:
     if time.time() - forrige_tid >= intervall:
         forrige_tid = time.time()
         if isSimulating:
-            fjernAlleCeller()
+            #fjernAlleCeller()
             oppdater()
-            tegnAlleCeller()
+            #tegnAlleCeller()
+            oppdaterAlleCeller()
 
     # Refresh vindu
     window.update()
