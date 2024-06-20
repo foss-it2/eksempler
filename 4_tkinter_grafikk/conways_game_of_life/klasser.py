@@ -30,7 +30,7 @@ class Celle:
             self.y + self.w/2,
             fill=self.fill,
             outline=self.outline,
-            width=2,
+            width=1,
             tags = self.id
         )
     
@@ -51,9 +51,9 @@ class Celle:
     def getNaboer(self,cells):
         i = self.i
         j = self.j
-        return cells[i-1][j-1], cells[i-1][j], cells[i-1][j+1], \
-            cells[i][j+1], cells[i+1][j+1], cells[i+1][j], \
-            cells[i+1][j-1], cells[i][j-1]
+        return cells[i-1][j-1].levende, cells[i-1][j].levende, cells[i-1][j+1].levende, \
+            cells[i][j+1].levende, cells[i+1][j+1].levende, cells[i+1][j].levende, \
+            cells[i+1][j-1].levende, cells[i][j-1].levende
 
 class TL(Celle):
     """Top Left"""
@@ -63,7 +63,7 @@ class TL(Celle):
     def getNaboer(self,cells):
         i = self.i
         j = self.j
-        return cells[i][j+1], cells[i+1][j+1], cells[i+1][j]
+        return cells[i][j+1].levende, cells[i+1][j+1].levende, cells[i+1][j].levende
 
 class TR(Celle):
     """Top Right"""
@@ -73,7 +73,7 @@ class TR(Celle):
     def getNaboer(self,cells):
         i = self.i
         j = self.j
-        return cells[i][j-1], cells[i+1][j-1], cells[i+1][j]
+        return cells[i][j-1].levende, cells[i+1][j-1].levende, cells[i+1][j].levende
 
 class BL(Celle):
     """Bottom Left"""
@@ -83,7 +83,7 @@ class BL(Celle):
     def getNaboer(self,cells):
         i = self.i
         j = self.j
-        return cells[i][j+1], cells[i-1][j+1], cells[i-1][j]
+        return cells[i][j+1].levende, cells[i-1][j+1].levende, cells[i-1][j].levende
 
 class BR(Celle):
     """Bottom Right"""
@@ -93,7 +93,7 @@ class BR(Celle):
     def getNaboer(self,cells):
         i = self.i
         j = self.j
-        return cells[i][j-1], cells[i-1][j-1], cells[i-1][j]
+        return cells[i][j-1].levende, cells[i-1][j-1].levende, cells[i-1][j].levende
 
 class TopRow(Celle):
     """Top Row"""
@@ -103,8 +103,8 @@ class TopRow(Celle):
     def getNaboer(self,cells):
         i = self.i
         j = self.j
-        return cells[i][j-1], cells[i+1][j-1], cells[i+1][j], \
-            cells[i+1][j+1], cells[i][j+1]
+        return cells[i][j-1].levende, cells[i+1][j-1].levende, cells[i+1][j].levende, \
+            cells[i+1][j+1].levende, cells[i][j+1].levende
 
 class BottomRow(Celle):
     """Bottom Row"""
@@ -114,8 +114,8 @@ class BottomRow(Celle):
     def getNaboer(self,cells):
         i = self.i
         j = self.j
-        return cells[i][j-1], cells[i-1][j-1], cells[i-1][j], \
-            cells[i-1][j+1], cells[i][j+1]
+        return cells[i][j-1].levende, cells[i-1][j-1].levende, cells[i-1][j].levende, \
+            cells[i-1][j+1].levende, cells[i][j+1].levende
 
 class LeftEdge(Celle):
     """Left Edge"""
@@ -125,8 +125,8 @@ class LeftEdge(Celle):
     def getNaboer(self,cells):
         i = self.i
         j = self.j
-        return cells[i-1][j], cells[i-1][j+1], cells[i][j+1], \
-            cells[i+1][j+1], cells[i+1][j]
+        return cells[i-1][j].levende, cells[i-1][j+1].levende, cells[i][j+1].levende, \
+            cells[i+1][j+1].levende, cells[i+1][j].levende
 
 class RightEdge(Celle):
     """Right Edge"""
@@ -136,208 +136,6 @@ class RightEdge(Celle):
     def getNaboer(self,cells):
         i = self.i
         j = self.j
-        return cells[i-1][j], cells[i-1][j-1], cells[i][j-1], \
-            cells[i+1][j-1], cells[i+1][j]
+        return cells[i-1][j].levende, cells[i-1][j-1].levende, cells[i][j-1].levende, \
+            cells[i+1][j-1].levende, cells[i+1][j].levende
 
-
-class Conways:
-    def __init__(self,cells,hoyde,bredde) -> None:
-        self.fun = True
-        self.cells = cells
-        self.hoyde = hoyde
-        self.bredde = bredde
-    
-    def oppdater(self):
-        for i in range(self.hoyde):
-            for j in range(self.bredde):
-                celle = self.cells[i][j]
-                # Sjekk naboer
-                levende = 0
-                dode = 0
-                #print(f"{i},{j}")
-                if i == 0:
-                    if j == 0: # Øvre venstre hjørne
-                        if self.cells[i][j+1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i+1][j].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i+1][j+1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                    elif j == self.bredde-1: # Øvre høyre hjørne
-                        if self.cells[i][j-1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i+1][j].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i+1][j-1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                    else: # Øvre rad mellom endene.
-                        if self.cells[i][j+1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i+1][j+1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i+1][j].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i+1][j-1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i][j-1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                elif i == self.hoyde-1:
-                    if j == 0: # Nedre venstre hjørne
-                        if self.cells[i][j+1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i-1][j+1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i-1][j].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                    elif j == self.bredde-1: # Nedre høyre hjørne
-                        if self.cells[i][j-1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i-1][j-1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i-1][j].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                    else: # Nedre rad mellom endene.
-                        if self.cells[i][j+1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i-1][j+1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i-1][j].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i-1][j-1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i][j-1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                else:
-                    if j == 0: # Venstre kant
-                        if self.cells[i-1][j].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i-1][j+1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i][j+1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i+1][j+1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i+1][j].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                    elif j == self.bredde-1: # Høyre kant
-                        if self.cells[i-1][j].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i-1][j-1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i][j-1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i+1][j-1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i+1][j].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                    else: # Alle andre celler med 8 naboer
-                        if self.cells[i-1][j-1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i-1][j].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i-1][j+1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i][j+1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i+1][j+1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i+1][j].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i+1][j-1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-                        if self.cells[i][j-1].levende:
-                            levende += 1
-                        else:
-                            dode += 1
-
-
-                # Sjekk de fire reglene for hva som skjer i neste iterasjon.
-                if celle.levende:
-                    if levende < 2:
-                        celle.nesteTilstand = False
-                    elif levende == 2 or levende == 3:
-                        celle.nesteTilstand = True
-                    elif levende > 3:
-                        celle.nesteTilstand = False
-                else:
-                    if levende == 3:
-                        celle.nesteTilstand = True
-                #print(f"{celle.id}: {celle.levende} -> {celle.nesteTilstand}")

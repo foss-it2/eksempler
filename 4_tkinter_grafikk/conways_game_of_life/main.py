@@ -111,16 +111,12 @@ def genererNyttBrett():
     tegnAlleCeller()
 
 def oppdater():
-    print("hei")
     for i in range(HOYDE):
         for j in range(BREDDE):
             celle = cells[i][j]
             # Sjekk naboer
-            levende = 0
-            naboer = celle.getNaboer(cells)
-            for n in naboer:
-                if n.levende:
-                    levende+=1
+            # Finner antall True i listen med naboer.
+            levende = celle.getNaboer(cells).count(True)
             # Sjekk de fire reglene for hva som skjer i neste iterasjon.
             if celle.levende:
                 if levende < 2:
@@ -144,6 +140,7 @@ HOYDE = 22
 W = 25
 
 # Lager brettet med celler.
+# Sjekker hva slags celle det er snakk om og setter korrekt klasse på cellen.
 for i in range(HOYDE):
     cells.append([])
     for j in range(BREDDE):
@@ -169,8 +166,6 @@ for i in range(HOYDE):
             else:
                 cells[i].append(Celle(i,j,(j+1)*W,(i+1)*W,W))
 
-
-game = Conways(cells,HOYDE,BREDDE)
 
 tegnAlleCeller()
 #drepAlleCeller()
