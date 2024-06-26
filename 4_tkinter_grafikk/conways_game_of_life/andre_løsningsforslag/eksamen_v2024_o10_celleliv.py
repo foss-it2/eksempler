@@ -118,7 +118,7 @@ simulate = True
 while fortsett:
     if simulate:
         tegnAlleCeller()
-        time.sleep(0.1)
+        time.sleep(0.05)
         oppdaterCelleLiv()
 
     # Sjekk innkomne hendelser:

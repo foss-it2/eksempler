@@ -182,7 +182,7 @@ start_tid = time.time()
 forrige_tid = time.time()
 isRunning = True
 isSimulating = False
-fps = 8
+fps = 10
 intervall = 1 / fps
 while isRunning:
     if time.time() - forrige_tid >= intervall:
