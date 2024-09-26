@@ -25,10 +25,11 @@ intervall = nytt_tidspunkt - fremtidig_tid2
 print(f"Typen til intervall (differanse) {type(intervall)}") # timedelta-objekt
 print(f"intervallet er: {intervall}")
 
-intervall2 = dt.datetime.now() - dt.datetime(2023,12,24,16,30)
+intervall2 = dt.datetime.now() - dt.datetime(2020,4,6,16,30)
 print(f"typen til intervall2: {type(intervall2)}") # timedelta-objekt
 print(f"intervall2: {intervall2}")
-print(f"Intervall2: dager: {intervall2.days}, timer: {intervall2.seconds}")
+print(
+    f"Intervall2: dager: {intervall2.days//365} år, {int((intervall2.days/365-intervall2.days//365)*12)} mnd, timer: {intervall2.seconds}")
 antall_timer = intervall2.seconds // (60*60)
 print(f"antall timer: {antall_timer}")
 
