@@ -33,6 +33,53 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous">
       </script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"
+          integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ=="
+          crossorigin="anonymous"></script>
+      <script type="text/javascript" charset="utf-8">
+          document.addEventListener("DOMContentLoaded", function () {
+              // Connect to the Socket.IO server
+              const socket = io();
+
+              // Handle new connections
+              socket.on('connect', () => {
+                  socket.emit('my_event', { data: "I'm connected!" });
+              });
+
+              // Handle messages from the server
+              socket.on('my_response', (msg, cb) => {
+                console.log(msg);
+                  //const log = document.getElementById('log');
+                  //const div = document.createElement('div');
+                  //div.textContent = `Received #${msg.count}: ${msg.data}`;
+                  //log.appendChild(div);
+
+                  if (cb) cb();
+              });
+
+              // Measure latency with ping-pong
+              const pingPongTimes = [];
+              let startTime;
+
+              setInterval(() => {
+                  startTime = new Date().getTime();
+                  document.getElementById('transport').textContent = socket.io.engine.transport.name;
+                  socket.emit('my_ping');
+              }, 1000);
+
+              socket.on('my_pong', () => {
+                  const latency = new Date().getTime() - startTime;
+                  pingPongTimes.push(latency);
+                  if (pingPongTimes.length > 30) pingPongTimes.shift();
+                  const avgLatency = pingPongTimes.reduce((a, b) => a + b, 0) / pingPongTimes.length;
+                  document.getElementById('ping-pong').textContent = Math.round(avgLatency * 10) / 10;
+              });
+
+              
+
+              
+          });
+      </script>
     {%- endblock scripts %}
     
 

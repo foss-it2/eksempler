@@ -13,6 +13,10 @@ import pytz # convert from UTC to local time
 # Pakker som har med innlogging å gjøre
 from flask import session
 
+# Pakker som har med socket.io å gjøre
+from flask_socketio import SocketIO, emit, join_room, leave_room, close_room, rooms, disconnect
+from threading import Lock
+
 
 
 app = Flask(__name__,
@@ -39,6 +43,15 @@ with app.app_context():
     except Exception as e:
         print(f"Error creating tables: {e}")
 
+# Initializes socket.io
+# Set this variable to "threading", "eventlet" or "gevent" to test the
+# different async modes, or leave it set to None for the application to choose
+# the best option based on installed packages.
+async_mode = None
+socketio = SocketIO(app, async_mode=async_mode)
+thread = None
+thread_lock = Lock()
+
 # Kode for å slette en rad i tabellen Posts (eller bytte it Posts med en annen tabell).
 # with app.app_context():
 #     row_to_delete = Posts.query.filter_by(id=2).first()
@@ -48,6 +61,17 @@ with app.app_context():
 #     with app.app_context():
 #         db.session.delete(row_to_delete)
 #         db.session.commit()
+
+def background_thread():
+    """Example of how to send server generated events to clients."""
+    count = 0
+    while True:
+        socketio.sleep(10)
+        count += 1
+        print("Sending server generated event")
+        socketio.emit('my_response', {'data': 'Server generated event', 'count': count})
+
+
 
 @app.route("/")
 def home():
@@ -157,6 +181,92 @@ def add_post():
             return render_template("posts.html", posts=alle_posts)
     else:
         return render_template("legg_til_post.html")
+
+
+@socketio.event
+def my_event(message):
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my_response',
+         {'data': message['data'], 'count': session['receive_count']})
+
+
+@socketio.event
+def my_broadcast_event(message):
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my_response',
+         {'data': message['data'], 'count': session['receive_count']},
+         broadcast=True)
+
+
+@socketio.event
+def join(message):
+    join_room(message['room'])
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my_response',
+         {'data': 'In rooms: ' + ', '.join(rooms()),
+          'count': session['receive_count']})
+
+
+@socketio.event
+def leave(message):
+    leave_room(message['room'])
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my_response',
+         {'data': 'In rooms: ' + ', '.join(rooms()),
+          'count': session['receive_count']})
+
+
+@socketio.on('close_room')
+def on_close_room(message):
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my_response', {'data': 'Room ' + message['room'] + ' is closing.',
+                         'count': session['receive_count']},
+         to=message['room'])
+    close_room(message['room'])
+
+
+@socketio.event
+def my_room_event(message):
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my_response',
+         {'data': message['data'], 'count': session['receive_count']},
+         to=message['room'])
+
+
+@socketio.event
+def disconnect_request():
+    @copy_current_request_context
+    def can_disconnect():
+        disconnect()
+
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    # for this emit we use a callback function
+    # when the callback function is invoked we know that the message has been
+    # received and it is safe to disconnect
+    emit('my_response',
+         {'data': 'Disconnected!', 'count': session['receive_count']},
+         callback=can_disconnect)
+
+
+@socketio.event
+def my_ping():
+    emit('my_pong')
+
+
+@socketio.event
+def connect():
+    global thread
+    with thread_lock:
+        if thread is None:
+            thread = socketio.start_background_task(background_thread)
+    emit('my_response', {'data': 'Connected', 'count': 0})
+
+
+@socketio.on('disconnect')
+def test_disconnect():
+    print('Client disconnected', request.sid)
+
+
 
 
 if __name__ == "__main__":
