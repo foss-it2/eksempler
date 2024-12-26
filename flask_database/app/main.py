@@ -267,7 +267,11 @@ def test_disconnect():
     print('Client disconnected', request.sid)
 
 
+@socketio.event
+def my_click_event(message):
+    print("Received click event: ", message)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)    # Debug er True så feilmeldinger og alt mulig rart vil komme opp i nettleseren.
+    # Debug er True så feilmeldinger og alt mulig rart vil komme opp i nettleseren.
+    app.run(host='0.0.0.0', port=5000, debug=True, )

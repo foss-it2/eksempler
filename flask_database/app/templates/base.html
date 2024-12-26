@@ -54,31 +54,22 @@
                   //div.textContent = `Received #${msg.count}: ${msg.data}`;
                   //log.appendChild(div);
 
-                  if (cb) cb();
-              });
+                  if (cb) cb(); // Call the callback
+              }); // End of socket.on('my_response')
 
-              // Measure latency with ping-pong
-              const pingPongTimes = [];
-              let startTime;
+              let teller = 0;
+              document.addEventListener('click', (event) => {
+                  socket.emit('my_click_event', { data: teller });
+                  teller++;
+              }); // End of click event listener
 
-              setInterval(() => {
-                  startTime = new Date().getTime();
-                  document.getElementById('transport').textContent = socket.io.engine.transport.name;
-                  socket.emit('my_ping');
-              }, 1000);
-
-              socket.on('my_pong', () => {
-                  const latency = new Date().getTime() - startTime;
-                  pingPongTimes.push(latency);
-                  if (pingPongTimes.length > 30) pingPongTimes.shift();
-                  const avgLatency = pingPongTimes.reduce((a, b) => a + b, 0) / pingPongTimes.length;
-                  document.getElementById('ping-pong').textContent = Math.round(avgLatency * 10) / 10;
-              });
+              let send_timer = setInterval(() => {
+                  socket.emit('my_click_event', { data: teller });
+                  teller++;
+              }, 5000); // End of setInterval
 
               
-
-              
-          });
+          }); // End of DOMContentLoaded
       </script>
     {%- endblock scripts %}
     
