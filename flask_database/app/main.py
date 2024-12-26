@@ -8,6 +8,7 @@ from flask import request
 import os
 from models import db, Users, Logg, Posts
 from datetime import datetime
+import pytz # convert from UTC to local time
 
 # Pakker som har med innlogging å gjøre
 from flask import session
@@ -129,6 +130,10 @@ def alle_posts():
     print("sjekker db")
     posts = Posts.query.all()
     print("Ferdgi sjekke db")
+    posts = Posts.query.all()
+    local_tz = pytz.timezone('Europe/Oslo')  # Replace with your local timezone
+    for post in posts:
+        post.date_added = post.date_added.replace(tzinfo=pytz.utc).astimezone(local_tz)
     return render_template("posts.html", posts=posts)
 
 

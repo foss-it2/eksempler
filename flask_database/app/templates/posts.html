@@ -16,6 +16,17 @@
     <h2>{{ session["current_user"] }} er innlogget.</h2>
     {% endif %}
 
+    <label for="timezone-select">Select Timezone:</label>
+    <select id="timezone-select">
+        <option value="local">Local Timezone</option>
+        <option value="Asia/Tokyo">Tokyo</option>
+        <option value="Africa/Cairo">Cairo</option>
+        <option value="Europe/London">London</option>
+        <option value="America/Chicago">Chicago</option>
+        <option value="America/Los_Angeles">LA</option>
+        <option value="US/Hawaii">Hawaii</option>
+    </select>
+
     {% if posts %}
         {% for post in posts %}
         <div class="post-container">
@@ -26,11 +37,63 @@
             </div>
             <div class="hr-white"></div>
             <div class="post-dato">
-                Skrevet av brukerID: {{ post.bruker_id }} -  {{ post.date_added.strftime('%d. %b %Y %H:%M') }}
+                Skrevet av brukerID: {{ post.bruker_id }} - <span class="utc-time" data-utc="{{ post.date_added.isoformat() }}">{{ post.date_added.strftime('%d. %b %Y %H:%M')}}</span>
+                <br>{{ post.date_added.isoformat() }}
             </div>
         </div>
         {% endfor %}
     {% endif %}
 
   </div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    const utcTimeElements = document.querySelectorAll('.utc-time');
+    const timezoneSelect = document.getElementById('timezone-select');
+
+    function updateTimes(timezone) {
+      utcTimeElements.forEach(utcTimeElement => {
+        const utcTimeString = utcTimeElement.getAttribute('data-utc');
+        const utcTime = new Date(utcTimeString);
+
+        let localTime;
+        if (timezone === 'local') {
+          const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          localTime = utcTime.toLocaleString('en-US', {
+            timeZone: userTimezone,
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+          });
+        } else {
+          localTime = utcTime.toLocaleString('en-US', {
+            timeZone: timezone,
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+          });
+        }
+
+        utcTimeElement.textContent = localTime;
+      });
+    }
+
+    timezoneSelect.addEventListener('change', (event) => {
+      const selectedTimezone = event.target.value;
+      updateTimes(selectedTimezone);
+    });
+
+    // Initial update with local timezone
+    updateTimes('local');
+  });
+</script>
 {% endblock %}
