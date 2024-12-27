@@ -1,10 +1,10 @@
 <div>
     <ul class="navigasjon">
-        <a href="{{ url_for('about') }}">
-            <li class="nav-knapp">Om oss</li>
-        </a>
         <a href="{{ url_for('home') }}">
             <li class="nav-knapp">Hjem</li>
+        </a>
+        <a href="{{ url_for('about') }}">
+            <li class="nav-knapp">Om oss</li>
         </a>
         <a href="{{ url_for('add_user') }}">
             <li class="nav-knapp">Ny bruker</li>
@@ -29,5 +29,8 @@
                 <li class="nav-knapp">Logg ut</li>
             </a>
         {% endif %}
+        <a href="#">
+            <li class="nav-knapp" id="counter"></li>
+        </a>
     </ul>
 </div>

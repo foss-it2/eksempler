@@ -38,21 +38,38 @@
           crossorigin="anonymous"></script>
       <script type="text/javascript" charset="utf-8">
           document.addEventListener("DOMContentLoaded", function () {
+              // Generate a unique client ID
+              function generateClientId() {
+                  const clientId = `${navigator.platform}-${navigator.userAgent}-${Date.now()}`;
+                  return clientId;
+              }
+
+              // Store client ID in localStorage if not already present
+              if (!localStorage.getItem('clientId')) {
+                  localStorage.setItem('clientId', generateClientId());
+              }
+
+              const clientId = localStorage.getItem('clientId');
+
               // Connect to the Socket.IO server
               const socket = io();
 
               // Handle new connections
               socket.on('connect', () => {
-                  socket.emit('my_event', { data: "I'm connected!" });
+                  socket.emit('client_info', {
+                      clientId: clientId,
+                      platform: navigator.platform,
+                      userAgent: navigator.userAgent,
+                      // Note: MAC address cannot be obtained via JavaScript due to security reasons
+                  });
               });
 
               // Handle messages from the server
               socket.on('my_response', (msg, cb) => {
                 console.log(msg);
-                  //const log = document.getElementById('log');
-                  //const div = document.createElement('div');
-                  //div.textContent = `Received #${msg.count}: ${msg.data}`;
-                  //log.appendChild(div);
+                const counter = document.getElementById("counter");
+                counter.innerHTML = "Count # " + msg.count;
+                //log.appendChild(div);
 
                   if (cb) cb(); // Call the callback
               }); // End of socket.on('my_response')
@@ -67,6 +84,12 @@
                   socket.emit('my_click_event', { data: teller });
                   teller++;
               }, 5000); // End of setInterval
+
+              // Function to force a reconnect by deleting the client ID
+              function forceReconnect() {
+                  localStorage.removeItem('clientId');
+                  location.reload();
+              }
 
               
           }); // End of DOMContentLoaded

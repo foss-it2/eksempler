@@ -252,6 +252,21 @@ def disconnect_request():
 def my_ping():
     emit('my_pong')
 
+clients = []
+
+@socketio.event
+def client_info(data):
+    client_id = data['clientId']
+    platform = data['platform']
+    user_agent = data['userAgent']
+    print(f"Client connected: {client_id}")
+    print(f"Platform: {platform}, User Agent: {user_agent}")
+    # Store or manage client information as needed
+    if client_id not in clients:
+        clients.append(client_id)
+    else:
+        print("Client already in list")
+
 
 @socketio.event
 def connect():
