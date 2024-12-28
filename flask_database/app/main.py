@@ -39,7 +39,7 @@ with app.app_context():
     try:
         db.create_all()
         print(db)
-        print("lagde db!")
+        print("Created db tables")
     except Exception as e:
         print(f"Error creating tables: {e}")
 
@@ -285,6 +285,14 @@ def test_disconnect():
 @socketio.event
 def my_click_event(message):
     print("Received click event: ", message)
+
+
+@socketio.event
+def client_timer_event(message):
+    id = -1
+    if message["client_id"] in clients:
+        id=clients.index(message["client_id"])
+    print(f"Timer event, client: {id}: {message['data']}")
 
 
 if __name__ == "__main__":

@@ -60,7 +60,6 @@
                       clientId: clientId,
                       platform: navigator.platform,
                       userAgent: navigator.userAgent,
-                      // Note: MAC address cannot be obtained via JavaScript due to security reasons
                   });
               });
 
@@ -81,7 +80,7 @@
               }); // End of click event listener
 
               let send_timer = setInterval(() => {
-                  socket.emit('my_click_event', { data: teller });
+                  socket.emit('client_timer_event', {client_id: clientId, data: teller });
                   teller++;
               }, 5000); // End of setInterval
 
