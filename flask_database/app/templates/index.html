@@ -2,23 +2,35 @@
 {% extends "base.html" %}
 
 
-{# Custom CSS for this very page is inserted here, Uncomment block to activate.}
+{ Custom CSS for this very page is inserted here, Uncomment block to activate.}
 {% block styles %}
 {{super()}}
-{% endblock %#}
+<style>
+  #innpakning {
+    width: 90vw;
+    height: 90vh;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffff00;
+    border: solid 1px white;
+  }
+  #tegneflate {
+    width: 100%;
+    height: 100%;
+  }
+
+</style>
+
+{% endblock %}
 
 {% block content %}
 
-  <div>
-    <h1>Velkommen IT2!</h1>
-    <img src="/static/duck.jpg" alt="Bilde av en and.">
-    <br>
-    <a href="/about">Om oss</a>
-    <br>
-    <a href="{{ url_for('home') }}">Hjem</a>
-    <h2>Bilde av and 2</h2>
-    <p>Parameter "bilder" er nå en variabel vi kan jobbe med.</p>
-    <img src="{{ bilder[1] }}" alt="bilde av and">
-    <br>
+  <div id="innpakning">
+    <svg id="tegneflate">
+        <line x1="0" y1="0" x2="500" y2="200" style="stroke:rgb(255,0,0);stroke-width:2;">
+    </svg>
+    
   </div>
 {% endblock %}

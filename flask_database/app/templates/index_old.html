@@ -1,0 +1,24 @@
+
+{% extends "base.html" %}
+
+
+{# Custom CSS for this very page is inserted here, Uncomment block to activate.}
+{% block styles %}
+{{super()}}
+{% endblock %#}
+
+{% block content %}
+
+  <div>
+    <h1>Velkommen IT2!</h1>
+    <img src="/static/duck.jpg" alt="Bilde av en and.">
+    <br>
+    <a href="/about">Om oss</a>
+    <br>
+    <a href="{{ url_for('home') }}">Hjem</a>
+    <h2>Bilde av and 2</h2>
+    <p>Parameter "bilder" er nå en variabel vi kan jobbe med.</p>
+    <img src="{{ bilder[1] }}" alt="bilde av and">
+    <br>
+  </div>
+{% endblock %}
