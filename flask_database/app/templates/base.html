@@ -36,63 +36,6 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"
           integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ=="
           crossorigin="anonymous"></script>
-      <script type="text/javascript" charset="utf-8">
-          document.addEventListener("DOMContentLoaded", function () {
-              // Generate a unique client ID
-              function generateClientId() {
-                  const clientId = `${navigator.platform}-${navigator.userAgent}-${Date.now()}`;
-                  return clientId;
-              }
-
-              // Store client ID in localStorage if not already present
-              if (!localStorage.getItem('clientId')) {
-                  localStorage.setItem('clientId', generateClientId());
-              }
-
-              const clientId = localStorage.getItem('clientId');
-
-              // Connect to the Socket.IO server
-              const socket = io();
-
-              // Handle new connections
-              socket.on('connect', () => {
-                  socket.emit('client_info', {
-                      clientId: clientId,
-                      platform: navigator.platform,
-                      userAgent: navigator.userAgent,
-                  });
-              });
-
-              // Handle messages from the server
-              socket.on('my_response', (msg, cb) => {
-                console.log(msg);
-                const counter = document.getElementById("counter");
-                counter.innerHTML = "Count # " + msg.count;
-                //log.appendChild(div);
-
-                  if (cb) cb(); // Call the callback
-              }); // End of socket.on('my_response')
-
-              let teller = 0;
-              document.addEventListener('click', (event) => {
-                  socket.emit('my_click_event', { data: teller });
-                  teller++;
-              }); // End of click event listener
-
-              let send_timer = setInterval(() => {
-                  socket.emit('client_timer_event', {client_id: clientId, data: teller });
-                  teller++;
-              }, 5000); // End of setInterval
-
-              // Function to force a reconnect by deleting the client ID
-              function forceReconnect() {
-                  localStorage.removeItem('clientId');
-                  location.reload();
-              }
-
-              
-          }); // End of DOMContentLoaded
-      </script>
     {%- endblock scripts %}
     
 

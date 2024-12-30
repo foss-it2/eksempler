@@ -16,6 +16,8 @@ from flask import session
 # Pakker som har med socket.io å gjøre
 from flask_socketio import SocketIO, emit, join_room, leave_room, close_room, rooms, disconnect
 from threading import Lock
+import json
+import time
 
 
 
@@ -72,6 +74,18 @@ def background_thread():
         socketio.emit('my_response', {'data': 'Server generated event', 'count': count})
 
 
+# Counter for client_svg_event messages
+svg_event_counter = 0
+counter_lock = Lock()
+
+def background_thread():
+    """Print the number of messages handled by client_svg_event every 100 ms."""
+    global svg_event_counter
+    while True:
+        socketio.sleep(1)
+        with counter_lock:
+            print(f"Messages handled by client_svg_event: {svg_event_counter}/second")
+            svg_event_counter = 0  # Reset the counter after printing
 
 @app.route("/")
 def home():
@@ -252,6 +266,32 @@ def disconnect_request():
 def my_ping():
     emit('my_pong')
 
+class Client:
+    id_count = 0
+    colors = [
+        ("red", [255, 50, 0]),
+        ("green", [90, 255, 50]),
+        ("blue", [133, 186, 255]),
+        ("yellow", [253, 255, 133]),
+        ("purple", [255, 112, 195]),
+        ("orange", [255, 153, 0]),
+        ("white", [255, 255, 255]),
+    ]
+    color_count = 0
+
+    def __init__(self):
+        self.id = self.setID()
+        self.RR = Client.colors[Client.color_count][1][0]
+        self.GG = Client.colors[Client.color_count][1][1]
+        self.BB = Client.colors[Client.color_count][1][2]
+        Client.color_count += 1
+        if Client.color_count >= len(Client.colors):
+            Client.color_count = 0
+    
+    def setID(self):
+        Client.id_count += 1
+        return Client.id_count
+    
 clients = []
 
 @socketio.event
@@ -270,11 +310,13 @@ def client_info(data):
 
 @socketio.event
 def connect():
-    global thread
+    global thread, clients
     with thread_lock:
         if thread is None:
             thread = socketio.start_background_task(background_thread)
-    emit('my_response', {'data': 'Connected', 'count': 0})
+    client = Client()
+    print(f"Client connected: {client.id}")
+    emit('connect_response', {"data": client.id, "RR": client.RR, "GG": client.GG, "BB": client.BB})
 
 
 @socketio.on('disconnect')
@@ -289,10 +331,20 @@ def my_click_event(message):
 
 @socketio.event
 def client_timer_event(message):
-    id = -1
-    if message["client_id"] in clients:
-        id=clients.index(message["client_id"])
-    print(f"Timer event, client: {id}: {message['data']}")
+    print(f"Timer event, client: {message['client_id']}: {message['data']}")
+
+
+@socketio.event
+def client_svg_event(message):
+    global svg_event_counter
+    with counter_lock:
+        svg_event_counter += 1
+    # Broadcast the message to all clients
+    # Start opening up json-data:
+    #line = json.loads(message["data"])
+    #print(f"SVG event, client: {message['client_id']}: {line}")
+    #print(f"SVG - client: {message['client_id']}")
+    emit('svg_line', {'data': message['data']}, broadcast=True)
 
 
 if __name__ == "__main__":

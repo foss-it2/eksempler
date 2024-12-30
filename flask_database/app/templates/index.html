@@ -8,13 +8,13 @@
 <style>
   #innpakning {
     width: 90vw;
-    height: 90vh;
+    height: 95vh;
     margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ffff00;
-    border: solid 1px white;
+    background-color: black;
+    border: solid 1px rgb(255, 0, 106);
   }
   #tegneflate {
     width: 100%;
@@ -29,8 +29,147 @@
 
   <div id="innpakning">
     <svg id="tegneflate">
-        <line x1="0" y1="0" x2="500" y2="200" style="stroke:rgb(255,0,0);stroke-width:2;">
+        <!--line x1="0" y1="0" x2="500" y2="200" style="stroke:rgb(255,0,0);stroke-width:2;"-->
     </svg>
     
   </div>
 {% endblock %}
+
+{% block scripts %}
+{{ super() }}
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Connect to the Socket.IO server
+      const socket = io();
+      let clientId;
+      let RR, GG, BB;
+
+      // Handle new connections
+      /* socket.on('connect', () => {
+          socket.emit('client_info', {
+              clientId: clientId,
+              platform: navigator.platform,
+              userAgent: navigator.userAgent,
+          });
+      }); */
+
+      socket.on('connect_response', (msg) => {
+        console.log("Connected to server with ID: ", msg["data"]);
+        clientId = msg["data"];
+        localStorage.setItem('clientId', clientId);
+        // set colors based on client ID
+        RR = msg["RR"];
+        GG = msg["GG"];
+        BB = msg["BB"];
+      });
+
+      // Handle messages from the server
+      socket.on('my_response', (msg, cb) => {
+        console.log(msg);
+        const counter = document.getElementById("counter");
+        counter.innerHTML = "Count # " + msg.count;
+        //log.appendChild(div);
+
+          if (cb) cb(); // Call the callback
+      }); // End of socket.on('my_response')
+
+      // Handle svg lines from the server
+      socket.on("svg_line", (jsonData) => {
+          const data = JSON.parse(jsonData["data"]);
+          console.log(data);
+          const svg = document.getElementById("tegneflate");
+          let strek = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          strek.setAttribute("style", `stroke:rgb(${data["R"]}, ${data["G"]}, ${data["B"]});stroke-width:${data["width"]};`);
+          strek.setAttribute("x1", data["x1"] * svgWidth/100);
+          strek.setAttribute("y1", data["y1"] * svgHeight/100);
+          strek.setAttribute("x2", data["x2"] * svgWidth/100);
+          strek.setAttribute("y2", data["y2"] * svgHeight/100);
+          svg.appendChild(strek);
+      }); // End of socket.on('svg_line')
+
+      let teller = 0;
+      document.addEventListener('click', (event) => {
+          socket.emit('my_click_event', { data: teller });
+          teller++;
+      }); // End of click event listener
+
+      let send_timer = setInterval(() => {
+          socket.emit('client_timer_event', {client_id: clientId, data: teller });
+          teller++;
+      }, 10000); // End of setInterval
+
+      // Function to force a reconnect by deleting the client ID
+      function forceReconnect() {
+          localStorage.removeItem('clientId');
+          location.reload();
+      }
+
+
+      let height = document.documentElement.clientHeight;
+      let width = document.documentElement.clientWidth;
+      console.log("Height: ", height, "Width: ", width);
+      let svgWidth = 0.99*width;
+      let svgHeight = 0.85*height;
+      const innpakning = document.getElementById("innpakning");
+      const svg = document.getElementById("tegneflate");
+      innpakning.style.width = svgWidth + "px";
+      innpakning.style.height = svgHeight + "px";
+
+      document.addEventListener("resize", function () {
+        height = document.documentElement.clientHeight;
+        width = document.documentElement.clientWidth;
+        console.log("Height: ", height, "Width: ", width);
+        innpakning.style.width = svgWidth + "px";
+        innpakning.style.height = svgHeight + "px";
+      });
+
+      // Lets mayhem loose and creates random lines and broadcasts them to the server
+      let svg_timer = setInterval(() => {
+        // Creates a new random curve which consists of between 5 and 100 line segments connected to each other. Random start x,y coordinate based on the width and height of the SVG. Next coordinate should be offset from the former by randomly between 1 and 100 pixels in x and y direction. 
+        // The format should be like this: <line x1="0" y1="0" x2="500" y2="200" style="stroke:rgb(255,0,0);stroke-width:2;">
+        const svg = document.getElementById("tegneflate");
+        let x1 = Math.floor(Math.random() * 100); // Percentage of the width
+        let y1 = Math.floor(Math.random() * 100);
+        for (let i = 0; i < Math.floor(Math.random() * 3) + 1; i++) {
+          // DOM-gererering OBS! MÅ ha createElementNS (name space)
+          let strek = document.createElementNS('http://www.w3.org/2000/svg','line'); // Lager en svg-strek
+          strek.setAttribute("style", "stroke:rgb(255, 0, 106);stroke-width:2;");
+          strek.setAttribute("x1", x1 * svgWidth/100);
+          strek.setAttribute("y1", y1 * svgHeight/100);
+          let x2 = x1 + Math.floor(Math.random() * 5) - 2.5;  // Percentage of the width
+          let y2 = y1 + Math.floor(Math.random() * 5) - 2.5;
+          while (x2 < 0 || x2 > svgWidth) {
+            x2 = x1 + Math.floor(Math.random() * 5) - 2.5;
+          }
+          while (y2 < 0 || y2 > svgHeight) {
+            y2 = y1 + Math.floor(Math.random() * 5) - 2.5;
+          }
+          strek.setAttribute("x2", x2 * svgWidth/100);
+          strek.setAttribute("y2", y2 * svgHeight/100);
+          tegneflate.appendChild(strek);
+          let strekObj = {
+            x1: x1,
+            y1: y1,
+            x2: x2,
+            y2: y2,
+            R: RR,
+            G: GG,
+            B: BB,
+            width: 2
+          };
+          // dumps svg into json and sends it to the server:
+          let jsonData = JSON.stringify(strekObj);
+          console.log(jsonData);
+          socket.emit('client_svg_event', { client_id: clientId, data: jsonData });
+
+          x1 = x2;
+          y1 = y2;
+        }
+      }, 1000);
+
+      
+      
+    });
+  </script>
+
+{% endblock%}
