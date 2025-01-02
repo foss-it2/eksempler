@@ -52,7 +52,9 @@ with app.app_context():
 async_mode = None
 socketio = SocketIO(app, async_mode=async_mode)
 thread = None
+thread2 = None
 thread_lock = Lock()
+counter_lock = Lock()
 
 # Kode for å slette en rad i tabellen Posts (eller bytte it Posts med en annen tabell).
 # with app.app_context():
@@ -66,7 +68,7 @@ thread_lock = Lock()
 
 def background_thread():
     """Example of how to send server generated events to clients."""
-    count = 0
+    count = 0   # Local variable that exists in this background thread.
     while True:
         socketio.sleep(10)
         count += 1
@@ -76,15 +78,14 @@ def background_thread():
 
 # Counter for client_svg_event messages
 svg_event_counter = 0
-counter_lock = Lock()
 
-def background_thread():
+def background_thread_counter():
     """Print the number of messages handled by client_svg_event every 100 ms."""
     global svg_event_counter
     while True:
         socketio.sleep(1)
-        with counter_lock:
-            print(f"Messages handled by client_svg_event: {svg_event_counter}/second")
+        with counter_lock:  # Global variable, so we need to lock it before rading and modifying it.
+            print(f"Messages handled by client_svg_event: {svg_event_counter:.1f}/second")
             svg_event_counter = 0  # Reset the counter after printing
 
 @app.route("/")
@@ -310,10 +311,12 @@ def client_info(data):
 
 @socketio.event
 def connect():
-    global thread, clients
+    global thread, thread2, clients
     with thread_lock:
         if thread is None:
             thread = socketio.start_background_task(background_thread)
+        if thread2 is None:
+            thread2 = socketio.start_background_task(background_thread_counter)
     client = Client()
     print(f"Client connected: {client.id}")
     emit('connect_response', {"data": client.id, "RR": client.RR, "GG": client.GG, "BB": client.BB})

@@ -96,7 +96,7 @@
       let send_timer = setInterval(() => {
           socket.emit('client_timer_event', {client_id: clientId, data: teller });
           teller++;
-      }, 10000); // End of setInterval
+      }, 60000); // End of setInterval
 
       // Function to force a reconnect by deleting the client ID
       function forceReconnect() {
@@ -165,7 +165,7 @@
           x1 = x2;
           y1 = y2;
         }
-      }, 1000);
+      }, 10000);
 
       
       
